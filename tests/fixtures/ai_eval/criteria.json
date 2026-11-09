@@ -1,0 +1,17 @@
+{
+  "scenario": "Payouts integration guide (Markdown) judged against semantic acceptance criteria",
+  "criteria": [
+    {"id": "A1", "title": "OAuth2 token", "weight_pct": 25, "method": "ai_review",
+     "description": "Explains how to obtain an OAuth2 access token from the PayPal Sandbox: a client-credentials POST to the /v1/oauth2/token endpoint with the app's client id and secret, and that the token expires and must be requested again.",
+     "keywords": ["oauth2", "token", "client_credentials", "expires"]},
+    {"id": "A2", "title": "Payout item status", "weight_pct": 25, "method": "ai_review",
+     "description": "Explains that an accepted Payouts batch is not proof of payment and that each item's final transaction_status (SUCCESS, UNCLAIMED, FAILED, RETURNED ...) must be read back from PayPal per recipient.",
+     "keywords": ["batch", "transaction_status", "SUCCESS", "UNCLAIMED"]},
+    {"id": "A3", "title": "Safe retry", "weight_pct": 25, "method": "ai_review",
+     "description": "Describes how to retry a payout after a timeout without paying twice: reuse the same sender_batch_id (PayPal refuses a duplicate) and read PayPal's record before sending anything new.",
+     "keywords": ["retry", "sender_batch_id", "duplicate", "timeout"]},
+    {"id": "A4", "title": "Sandbox and secrets", "weight_pct": 25, "method": "ai_review",
+     "description": "States that the guide targets the Sandbox (api-m.sandbox.paypal.com) and that client secrets are kept in environment variables, never committed to the repository.",
+     "keywords": ["sandbox", "environment", "secret", "repository"]}
+  ]
+}

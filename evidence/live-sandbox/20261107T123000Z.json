@@ -1,0 +1,297 @@
+{
+ "at": "20261107T123000Z",
+ "base_url": "https://api-m.sandbox.paypal.com",
+ "mode": "live_sandbox",
+ "checks": {
+  "order": {
+   "id": "0BU17218CF9686127",
+   "status": "CREATED",
+   "readback_status": "CREATED",
+   "approve_host": "www.sandbox.paypal.com",
+   "replay_same_order": true
+  },
+  "authorize_before_approval": {
+   "refused": true,
+   "step": "AUTHORIZE_ORDER",
+   "paypal_status_code": 422,
+   "name": "UNPROCESSABLE_ENTITY",
+   "issue": "ORDER_NOT_APPROVED",
+   "message": "The requested action could not be performed, semantically incorrect, or failed business validation.",
+   "debug_id": "f394826310b83",
+   "links": [
+    {
+     "rel": "information_link",
+     "href": "https://developer.paypal.com/api/rest/reference/orders/v2/errors/#ORDER_NOT_APPROVED"
+    }
+   ]
+  },
+  "payout": {
+   "payout_batch_id": "3E6Q97TWSPNGQ",
+   "first_batch_status": "PENDING",
+   "replay_same_request": {
+    "answer": "refused",
+    "step": "CREATE_PAYOUT",
+    "paypal_status_code": 400,
+    "name": "USER_BUSINESS_ERROR",
+    "issue": "Batch with given sender_batch_id already exists",
+    "message": "User business error.",
+    "debug_id": "f233467dec2a1",
+    "links": []
+   },
+   "duplicate_sender_batch_id": {
+    "refused": true,
+    "step": "CREATE_PAYOUT_DUPLICATE",
+    "paypal_status_code": 400,
+    "name": "USER_BUSINESS_ERROR",
+    "issue": "Batch with given sender_batch_id already exists",
+    "message": "User business error.",
+    "debug_id": "f233467e58499",
+    "links": []
+   },
+   "polls": [
+    {
+     "batch_status": "PENDING",
+     "items": [
+      "PENDING",
+      "PENDING"
+     ]
+    },
+    {
+     "batch_status": "PENDING",
+     "items": [
+      "PENDING",
+      "PENDING"
+     ]
+    },
+    {
+     "batch_status": "PENDING",
+     "items": [
+      "PENDING",
+      "PENDING"
+     ]
+    },
+    {
+     "batch_status": "PROCESSING",
+     "items": [
+      "PENDING",
+      "PENDING"
+     ]
+    },
+    {
+     "batch_status": "PROCESSING",
+     "items": [
+      "SUCCESS",
+      "UNCLAIMED"
+     ]
+    },
+    {
+     "batch_status": "SUCCESS",
+     "items": [
+      "SUCCESS",
+      "UNCLAIMED"
+     ]
+    }
+   ],
+   "items": [
+    {
+     "receiver_kind": "paypal_simulator_receiver",
+     "amount": {
+      "currency": "USD",
+      "value": "1.40"
+     },
+     "transaction_status": "SUCCESS",
+     "payout_item_id": "V8JY3HA6EYMSL",
+     "errors": null
+    },
+    {
+     "receiver_kind": "no_paypal_account",
+     "amount": {
+      "currency": "USD",
+      "value": "0.60"
+     },
+     "transaction_status": "UNCLAIMED",
+     "payout_item_id": "8GUSFYX5BYJJU",
+     "errors": {
+      "name": "RECEIVER_UNREGISTERED",
+      "message": "The recipient for this payout does not have an account. A link to sign up for an account was sent to the recipient. However, if the recipient does not claim this payout within 30 days, the funds will be returned to your account.",
+      "information_link": "https://developer.paypal.com/docs/api/payments.payouts-batch/#errors",
+      "details": [],
+      "links": []
+     }
+    }
+   ],
+   "item_readback_status": "SUCCESS"
+  },
+  "forged_webhook": {
+   "verified": false,
+   "verification_status": "FAILURE",
+   "reason": "PayPal did not verify the signature"
+  },
+  "temporary_webhook_deleted": true
+ },
+ "calls": [
+  {
+   "step": "OAUTH2_TOKEN",
+   "method": "POST",
+   "endpoint": "/v1/oauth2/token",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f9848125029ff",
+   "paypal_request_id": null
+  },
+  {
+   "step": "CREATE_ORDER",
+   "method": "POST",
+   "endpoint": "/v2/checkout/orders",
+   "status_code": 201,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f736377f2628b",
+   "paypal_request_id": "pactpay-livecheck-20261107T123000Z-646094-order"
+  },
+  {
+   "step": "CREATE_ORDER",
+   "method": "POST",
+   "endpoint": "/v2/checkout/orders",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f29194270c932",
+   "paypal_request_id": "pactpay-livecheck-20261107T123000Z-646094-order"
+  },
+  {
+   "step": "GET_ORDER",
+   "method": "GET",
+   "endpoint": "/v2/checkout/orders/0BU17218CF9686127",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f690181bc89b5",
+   "paypal_request_id": null
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "method": "POST",
+   "endpoint": "/v2/checkout/orders/0BU17218CF9686127/authorize",
+   "status_code": 422,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f394826310b83",
+   "paypal_request_id": "pactpay-livecheck-20261107T123000Z-646094-authorize"
+  },
+  {
+   "step": "CREATE_PAYOUT",
+   "method": "POST",
+   "endpoint": "/v1/payments/payouts",
+   "status_code": 201,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f78143388e741",
+   "paypal_request_id": "PACTPAY-LIVECHECK-20261107T123000Z-646094"
+  },
+  {
+   "step": "CREATE_PAYOUT",
+   "method": "POST",
+   "endpoint": "/v1/payments/payouts",
+   "status_code": 400,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f233467dec2a1",
+   "paypal_request_id": "PACTPAY-LIVECHECK-20261107T123000Z-646094"
+  },
+  {
+   "step": "CREATE_PAYOUT_DUPLICATE",
+   "method": "POST",
+   "endpoint": "/v1/payments/payouts",
+   "status_code": 400,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f233467e58499",
+   "paypal_request_id": "PACTPAY-LIVECHECK-20261107T123000Z-646094-second"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f9223800cf394",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f293910a1db23",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f886874e4e6bb",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f3080001b86f2",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f2577737c447e",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts/3E6Q97TWSPNGQ",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f9086757ad90d",
+   "paypal_request_id": null
+  },
+  {
+   "step": "GET_PAYOUT_ITEM",
+   "method": "GET",
+   "endpoint": "/v1/payments/payouts-item/V8JY3HA6EYMSL",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f607515420a01",
+   "paypal_request_id": null
+  },
+  {
+   "step": "CREATE_WEBHOOK",
+   "method": "POST",
+   "endpoint": "/v1/notifications/webhooks",
+   "status_code": 201,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f563388bb0985",
+   "paypal_request_id": null
+  },
+  {
+   "step": "VERIFY_WEBHOOK_SIGNATURE",
+   "method": "POST",
+   "endpoint": "/v1/notifications/verify-webhook-signature",
+   "status_code": 200,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f3644749d431e",
+   "paypal_request_id": null
+  },
+  {
+   "step": "DELETE_WEBHOOK",
+   "method": "DELETE",
+   "endpoint": "/v1/notifications/webhooks/4LN62907RD944660A",
+   "status_code": 204,
+   "mode": "live_sandbox",
+   "paypal_debug_id": "f989637c3b138",
+   "paypal_request_id": null
+  }
+ ],
+ "all_live": true
+}

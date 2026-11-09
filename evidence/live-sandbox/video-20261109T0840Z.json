@@ -1,0 +1,151 @@
+{
+ "what": "the PayPal records behind the live demo video (pactpay_demo_LIVE_SANDBOX.mp4, sha256 151044041f81ff49b052917f62713f95845b36d632cc27104e399865a2f23f6c)",
+ "pact": {
+  "id": "PACT-C0C8B7922BA2",
+  "status": "PAYOUT_UNCLAIMED",
+  "paypal_mode": "live_sandbox",
+  "order_id": "8MH85650S41567000",
+  "authorization_id": "09W85969TX3366108",
+  "authorization_status": "CREATED",
+  "authorized_cents": 50000
+ },
+ "capture": {
+  "capture_id": "3V818276N9145912L",
+  "capture_status": "COMPLETED",
+  "captured_cents": 50000,
+  "fee_cents": 2480,
+  "net_cents": 47520
+ },
+ "payout": {
+  "payout_batch_id": "QA35RLSW9N842",
+  "sender_batch_id": "PACTPAY-PACT-C0C8B7922BA2-R1"
+ },
+ "items": [
+  {
+   "amount_cents": 33264,
+   "transaction_status": "SUCCESS",
+   "payout_item_id": "PMMF3P3F5GLHE"
+  },
+  {
+   "amount_cents": 14256,
+   "transaction_status": "UNCLAIMED",
+   "payout_item_id": "PKB82FXJA7AVJ"
+  }
+ ],
+ "evaluations_score_pct": [
+  75.0,
+  0.0,
+  100.0
+ ],
+ "paypal_calls": [
+  {
+   "step": "OAUTH2_TOKEN",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f917045262f05"
+  },
+  {
+   "step": "CREATE_ORDER",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "f170937c49b67"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f82547995f733"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f21359422f93f"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f854541beb2f5"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7cc01ab8"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7d0a6eba"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7d548a8d"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7d9e7ddb"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7deb1eb2"
+  },
+  {
+   "step": "GET_ORDER",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7df7faa0"
+  },
+  {
+   "step": "CAPTURE_AUTHORIZATION",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7f84594e"
+  },
+  {
+   "step": "CREATE_PAYOUT",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7f957872"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7f98cc20"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7fa8a9a5"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a7fe20f85"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a801d4a0e"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a80591c24"
+  }
+ ],
+ "all_live": true
+}

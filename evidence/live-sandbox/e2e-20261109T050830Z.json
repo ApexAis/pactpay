@@ -1,0 +1,557 @@
+{
+ "at": "20261109T050830Z",
+ "steps": [
+  {
+   "step": "demo start",
+   "http": 200,
+   "status": null,
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "payees for the live test",
+   "http": 200,
+   "status": "DRAFT",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "approve terms (client)",
+   "http": 200,
+   "status": "DRAFT",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "approve terms (freelancer)",
+   "http": 200,
+   "status": "TERMS_APPROVED",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "create PayPal order",
+   "http": 200,
+   "status": "AWAITING_BUYER_APPROVAL",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "authorize (verified against PayPal's order record)",
+   "http": 200,
+   "status": "FUNDS_HELD",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "submit fixed deliverable",
+   "http": 200,
+   "status": "SUBMITTED",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "evaluate",
+   "http": 200,
+   "status": "AUDITED",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "release (client)",
+   "http": 200,
+   "status": "PAYOUT_PENDING",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "reconcile",
+   "http": 200,
+   "status": "PAYOUT_PENDING",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "reconcile",
+   "http": 200,
+   "status": "PAYOUT_PENDING",
+   "error": null,
+   "message": null
+  },
+  {
+   "step": "reconcile",
+   "http": 200,
+   "status": "PAYOUT_UNCLAIMED",
+   "error": null,
+   "message": null
+  }
+ ],
+ "authorize_before_approval": {
+  "http": 409,
+  "error": "buyer_not_approved",
+  "paypal_issue": "ORDER_NOT_APPROVED"
+ },
+ "buyer_approval": {
+  "approved": true,
+  "mode": "manual, in PayPal Checkout",
+  "stopped": null
+ },
+ "second_release": {
+  "http": 409,
+  "error": "already_released"
+ },
+ "pact_id": "PACT-D43286A0FABB",
+ "final_status": "PAYOUT_UNCLAIMED",
+ "order": {
+  "id": "3MN53535C0194080G",
+  "status": "COMPLETED"
+ },
+ "authorization": {
+  "id": "93442531YL256941R",
+  "status": "CREATED",
+  "amount_cents": 50000,
+  "expires": "2026-12-08T05:18:22Z"
+ },
+ "evaluation": {
+  "score_pct": 100.0,
+  "recommended_cents": 50000,
+  "sandbox": {
+   "isolation": "bwrap --unshare-all (no network, own pid/ipc/uts/user namespaces), read-only /usr and Python, tmpfs work dir, empty environment, audit hook",
+   "kind": "bwrap",
+   "limits": {
+    "address_space_mb": 1024,
+    "call_timeout_s": 5.0,
+    "cpu_s": 10,
+    "file_size_mb": 1,
+    "import_timeout_s": 8.0,
+    "open_files": 64,
+    "tmpfs_mb": 16
+   },
+   "network": "blocked"
+  },
+  "reviewer": {
+   "detail": "4 verdict(s), 1 after one follow-up for criteria the first answer left out",
+   "latency_ms": 21272.3,
+   "model": "openai-compatible:gpt-oss:20b",
+   "status": "ok"
+  }
+ },
+ "capture": {
+  "capture_id": "62V48776D0025551B",
+  "capture_status": "COMPLETED",
+  "captured_cents": 50000,
+  "fee_cents": 2480,
+  "net_cents": 47520
+ },
+ "payout": {
+  "payout_batch_id": "N9JA975ZXZT5U",
+  "batch_status": "SUCCESS",
+  "items": [
+   {
+    "payee_id": "P1",
+    "amount_cents": 33264,
+    "payout_item_id": "N4M7AGFXT8254",
+    "transaction_status": "SUCCESS",
+    "error": null
+   },
+   {
+    "payee_id": "P2",
+    "amount_cents": 14256,
+    "payout_item_id": "67X3UH7BKMQJN",
+    "transaction_status": "UNCLAIMED",
+    "error": "RECEIVER_UNREGISTERED"
+   }
+  ]
+ },
+ "evidence_chain": {
+  "valid": true,
+  "events": 16,
+  "broken_at": null,
+  "head_sha256": "c1e20e16c358655d9b0da86093450275f8e940d25ea9c3ab6eac1a49123f1c47"
+ },
+ "paypal_calls": [
+  {
+   "step": "OAUTH2_TOKEN",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f623144296290"
+  },
+  {
+   "step": "CREATE_ORDER",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "f264872fc3d24"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f629880401fd6"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f61212742c740"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f1390142a2681"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f2249740d7ad9"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f438964855eb4"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f300399280177"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f52866458ab6d"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f5933580cb239"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f657953dad71b"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f87548466703c"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f98222015df6e"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f1493030fd64f"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f299946c7a2aa"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f34346543f68a"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f597287a5160f"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f4291369fc273"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f749336920876"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f2684563b863d"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f14352158bf7c"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f407059de09a0"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f97849488aa92"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f730598e22800"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f448817c2f25b"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f867958cb9213"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f19438700824c"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f954098d2fe68"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f1612160a1238"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f29863610836c"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f6247361b2b4e"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f702597428209"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f43687402c94e"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a5531aedf"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a55778946"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a55bc5fd3"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a56057d26"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a5647ad85"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a568aaf79"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a56d4ee5a"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a57181d31"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a575dfd07"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "ca57a57a11b83"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f480997b93db8"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f177088557834"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f18590552f002"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f651330e1a749"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f8462841b3d87"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f233635d8610b"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f9328648a08f4"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f995855df534f"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f93542330d2b6"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f17789813bf08"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f26159887eb20"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 422,
+   "mode": "live_sandbox",
+   "debug_id": "f354488359265"
+  },
+  {
+   "step": "AUTHORIZE_ORDER",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "f535439b2edae"
+  },
+  {
+   "step": "GET_ORDER",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f9864890eb7d0"
+  },
+  {
+   "step": "CAPTURE_AUTHORIZATION",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "f592214070d96"
+  },
+  {
+   "step": "CREATE_PAYOUT",
+   "http": 201,
+   "mode": "live_sandbox",
+   "debug_id": "f709512863b61"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f740191a698db"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f5073306a511b"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f23866903732f"
+  },
+  {
+   "step": "GET_PAYOUT_BATCH",
+   "http": 200,
+   "mode": "live_sandbox",
+   "debug_id": "f230169865dbf"
+  }
+ ],
+ "all_live": true,
+ "paypal_money_calls": {
+  "CAPTURE_AUTHORIZATION": 1,
+  "CREATE_PAYOUT": 1
+ }
+}

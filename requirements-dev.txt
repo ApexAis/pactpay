@@ -1,0 +1,2 @@
+playwright==1.64.0        # scripts/ui_e2e.py, ui_dispute_e2e.py, live_e2e.py, video/record_demo.py (then: playwright install chromium)
+imageio-ffmpeg>=0.5       # scripts/video/assemble.py (static ffmpeg)

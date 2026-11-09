@@ -1,0 +1,8 @@
+[WhatsApp: receipt emailer]
+Lina (client): Can you two build our PayPal receipt helper by Friday? Budget is $600.
+Noor: Yes. I write the code, Omar tests and documents it. Split it 65% to me (noor.dev.sandbox@example.com) and 35% to Omar (omar.qa.sandbox@example.com).
+Lina: Deal. It must have:
+1. A function format_receipt(amount_cents, currency) that returns text like "$12.50 USD".
+2. A function is_duplicate(event_id, seen) that returns True when the event id was already processed.
+3. A README section that explains how to run it.
+Lina: And make it look nice.

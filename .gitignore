@@ -1,0 +1,10 @@
+# local configuration with credentials: never committed (copy .env.example to .env)
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+pactpay.db*
+evidence/**/raw/
+build/
+models/

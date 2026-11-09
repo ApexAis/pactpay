@@ -1,0 +1,79 @@
+{
+ "_doc": "One entry per scene: narration (spoken) and caption (on screen). {LIVE_OR_SIM} and {EVAL_*} are filled by tts.py from the run's facts; nothing else is templated.",
+ "voice": "am_michael",
+ "speed": 1.06,
+ "scenes": {
+  "s01_hook": {
+   "caption": "PactPay: agreements that pay out exactly as written",
+   "narration": "Freelance teams still get paid on trust, and split the money by hand. PactPay turns the agreement into a payment policy that PayPal enforces. Its AI can hold money back. It can never release it."
+  },
+  "s02_agreement": {
+   "caption": "1 · Describe the agreement in plain words",
+   "narration": "Start with the agreement in plain words: the budget, the shares, the deliverables."
+  },
+  "s03_drafted": {
+   "caption": "AI drafts the policy, checked word-for-word against the chat",
+   "narration": "A local model drafts the policy in integer cents and exact shares. Every requirement must quote the chat word for word, and anything the draft invents, leaves out, or cannot test is flagged for a person to review."
+  },
+  "s04_pact": {
+   "caption": "2 · A policy both parties can read: tests, payees, cents",
+   "narration": "Here is a five hundred dollar milestone: four requirements with executable tests, and a seventy thirty split."
+  },
+  "s05_lock": {
+   "caption": "Both approve one SHA-256 — any edit invalidates both approvals",
+   "narration": "Both parties approve one SHA-256 of these terms. Any edit voids both approvals, and once locked, nothing can change."
+  },
+  "s06_fund": {
+   "caption": "3 · PayPal Orders v2 · intent AUTHORIZE — {LIVE_OR_SIM}",
+   "narration": "The client funds it with a PayPal authorization: the money is held, not moved. PactPay accepts the hold only after reading PayPal's own record. {FUND_NOTE}"
+  },
+  "s06b_held": {
+   "caption": "Hold verified from PayPal's own order record",
+   "narration": "The hold is verified."
+  },
+  "s07_flawed": {
+   "caption": "4 · The freelancer delivers a first draft",
+   "narration": "A first draft arrives. The agreed tests run in a sandbox, then an AI reviewer reads the code."
+  },
+  "s08_flawed_result": {
+   "caption": "Tests fail C3 · AI cites the exact line · 75% recommended",
+   "narration": "One requirement fails. The AI cites the exact lines, and PactPay verifies every quote. Seventy five percent is only a recommendation."
+  },
+  "s09_attack": {
+   "caption": "An attacker's version: instructions hidden for the AI",
+   "narration": "Now an attack: hidden instructions telling the AI to pass everything."
+  },
+  "s10_attack_result": {
+   "caption": "Injection flagged · tests fail · $0 recommended",
+   "narration": "Flagged. The tests fail. Zero is recommended. The AI can hold a payment back, but never push one through."
+  },
+  "s11_fixed": {
+   "caption": "The real final version",
+   "narration": "Then the real final version."
+  },
+  "s12_fixed_result": {
+   "caption": "All tests pass · AI verdicts verified · 100%",
+   "narration": "Every test passes, and every AI verdict is backed by a verified quote."
+  },
+  "s13_release": {
+   "caption": "5 · A person releases — PayPal captures, then pays out",
+   "narration": "A person releases. PayPal captures once, and one Payouts batch splits what PayPal actually received, to the cent."
+  },
+  "s14_paid": {
+   "caption": "Each payee's status is what PayPal reports",
+   "narration": "Each payee's status is exactly what PayPal reports. {PAYOUT_NOTE}"
+  },
+  "s15_duplicate": {
+   "caption": "A second release is refused",
+   "narration": "A second release is refused, by PactPay, and by PayPal's idempotency too."
+  },
+  "s16_evidence": {
+   "caption": "6 · Evidence: hash-chained log + every PayPal call",
+   "narration": "Everything lands on a hash-chained record, with every PayPal call and its debug id."
+  },
+  "s17_close": {
+   "caption": "{EVAL_CAPTION}",
+   "narration": "{EVAL_NARRATION} PactPay. AI that reads the work, people who decide, and PayPal records that prove it."
+  }
+ }
+}

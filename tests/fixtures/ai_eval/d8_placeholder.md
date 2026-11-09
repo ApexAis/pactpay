@@ -1,0 +1,3 @@
+# Payouts guide
+
+Coming soon.

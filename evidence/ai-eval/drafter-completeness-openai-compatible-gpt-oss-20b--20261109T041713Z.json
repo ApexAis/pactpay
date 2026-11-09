@@ -1,0 +1,267 @@
+{
+ "at": "20261109T041713Z",
+ "chat": "[WhatsApp: receipt emailer]\nLina (client): Can you two build our PayPal receipt helper by Friday? Budget is $600.\nNoor: Yes. I write the code, Omar tests and documents it. Split it 65% to me (noor.dev.sandbox@example.com) and 35% to Omar (omar.qa.sandbox@example.com).\nLina: Deal. It must have:\n1. A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\".\n2. A function is_duplicate(event_id, seen) that returns True when the event id was already processed.\n3. A README section that explains how to run it.\nLina: And make it look nice.\n",
+ "summary": {
+  "model": "openai-compatible (gpt-oss:20b)",
+  "runs": 6,
+  "all_listed_covered": 6,
+  "repair_rounds_used": 3,
+  "valid_terms": 6,
+  "omissions_reported_when_present": true
+ },
+ "runs": [
+  {
+   "run": 0,
+   "seconds": 43.3,
+   "model_calls": 2,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\"."
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "manual",
+     "quote": "A README section that explains how to run it."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the first AI draft had 2 problem(s); a second draft with the validator's findings fixed some or all of them",
+    "the chat does not state how much each requirement is worth: the weights C1 34%, C2 33%, C3 33% are the AI's proposal; review them before approving"
+   ]
+  },
+  {
+   "run": 1,
+   "seconds": 10.0,
+   "model_calls": 1,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\""
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "ai_review",
+     "quote": "A README section that explains how to run it."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the chat does not state how much each requirement is worth: the weights C1 34%, C2 33%, C3 33% are the AI's proposal; review them before approving"
+   ]
+  },
+  {
+   "run": 2,
+   "seconds": 22.1,
+   "model_calls": 2,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\""
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "ai_review",
+     "quote": "A README section that explains how to run it."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the first AI draft had 2 problem(s); a second draft with the validator's findings fixed some or all of them",
+    "the chat does not state how much each requirement is worth: the weights C1 35%, C2 35%, C3 30% are the AI's proposal; review them before approving"
+   ]
+  },
+  {
+   "run": 3,
+   "seconds": 35.7,
+   "model_calls": 2,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "1. A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\"."
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "2. A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "ai_review",
+     "quote": "3. A README section that explains how to run it."
+    },
+    {
+     "id": "C4",
+     "method": "manual",
+     "quote": "And make it look nice."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the first AI draft had 2 problem(s); a second draft with the validator's findings fixed some or all of them",
+    "the chat does not state how much each requirement is worth: the weights C1 40%, C2 30%, C3 20%, C4 10% are the AI's proposal; review them before approving"
+   ]
+  },
+  {
+   "run": 4,
+   "seconds": 13.3,
+   "model_calls": 1,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\"."
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "ai_review",
+     "quote": "A README section that explains how to run it."
+    },
+    {
+     "id": "C4",
+     "method": "manual",
+     "quote": "And make it look nice."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the chat does not state how much each requirement is worth: the weights C1 35%, C2 25%, C3 20%, C4 20% are the AI's proposal; review them before approving"
+   ]
+  },
+  {
+   "run": 5,
+   "seconds": 9.3,
+   "model_calls": 1,
+   "criteria": [
+    {
+     "id": "C1",
+     "method": "tests",
+     "quote": "A function format_receipt(amount_cents, currency) that returns text like \"$12.50 USD\"."
+    },
+    {
+     "id": "C2",
+     "method": "tests",
+     "quote": "A function is_duplicate(event_id, seen) that returns True when the event id was already processed."
+    },
+    {
+     "id": "C3",
+     "method": "ai_review",
+     "quote": "A README section that explains how to run it."
+    }
+   ],
+   "listed_requirements_covered": 3,
+   "listed_requirements": 3,
+   "executable_tests": 2,
+   "amount_cents": 60000,
+   "payees": [
+    [
+     "noor.dev.sandbox@example.com",
+     65
+    ],
+    [
+     "omar.qa.sandbox@example.com",
+     35
+    ]
+   ],
+   "valid_terms": true,
+   "notes": [
+    "the chat does not state how much each requirement is worth: the weights C1 40%, C2 30%, C3 30% are the AI's proposal; review them before approving"
+   ]
+  }
+ ]
+}
