@@ -21,6 +21,7 @@
   --brand-ink: #ffffff;
   --brand-soft: #e7effc;
   --brand-text: #0a4cb3;
+  --wordmark: #17122B;
   --ok: #0f6e47;
   --ok-soft: #e2f3ea;
   --ok-border: #9fd6bb;
@@ -57,6 +58,7 @@
     --brand-ink: #03101f;
     --brand-soft: #132a4b;
     --brand-text: #93c3ff;
+  --wordmark: #FBF9F4;
     --ok: #5fd49d;
     --ok-soft: #0e2d21;
     --ok-border: #1f5a40;
@@ -93,6 +95,7 @@
   --brand-ink: #03101f;
   --brand-soft: #132a4b;
   --brand-text: #93c3ff;
+  --wordmark: #FBF9F4;
   --ok: #5fd49d;
   --ok-soft: #0e2d21;
   --ok-border: #1f5a40;
@@ -168,7 +171,9 @@ button, input, textarea, select { font: inherit; color: inherit; }
 }
 .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text); flex: none; }
 .brand__mark { width: 28px; height: 28px; flex: none; }
-.brand__name { font-weight: 750; font-size: 17px; letter-spacing: -.02em; }
+.brand__text { display: flex; flex-direction: column; gap: 1px; line-height: 1.1; }
+.brand__name { font-weight: 560; font-size: 16px; letter-spacing: .11em; color: var(--wordmark); }
+.brand__tag { font-size: 10.5px; font-weight: 500; letter-spacing: .02em; color: var(--muted); white-space: nowrap; }
 .pact-title { min-width: 0; flex: 1 1 260px; display: flex; flex-direction: column; }
 .pact-title__name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pact-title__meta { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; flex-wrap: wrap; }
@@ -658,7 +663,7 @@ table.table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .btn-label-long { display: none; }
 }
 @media (max-width: 420px) {
-  .brand__name { display: none; }
+  .brand__name, .brand__tag { display: none; }
   .amount--xl { font-size: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {

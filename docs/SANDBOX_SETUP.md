@@ -1,6 +1,6 @@
-# Running PactPay against the real PayPal Sandbox
+# Running YAVQEN against the real PayPal Sandbox
 
-Without credentials PactPay runs against its offline PayPal protocol simulator. The UI says SIMULATOR on every
+Without credentials YAVQEN runs against its offline PayPal protocol simulator. The UI says SIMULATOR on every
 screen, and no PayPal account is contacted. With Sandbox credentials, every PayPal step is a real call to
 `api-m.sandbox.paypal.com`, using Sandbox money only.
 
@@ -39,7 +39,7 @@ bash scripts/run_live_sandbox.sh            # reads ~/.config/pactpay/sandbox.en
 
 This runs two scripts.
 
-* **`scripts/live_sandbox_check.py`** checks the protocol behaviour PactPay relies on:
+* **`scripts/live_sandbox_check.py`** checks the protocol behaviour YAVQEN relies on:
   * an order replayed with the same `PayPal-Request-Id` is the same order;
   * authorizing before buyer approval is refused;
   * a Payouts batch is read back until every item settles;
@@ -72,7 +72,8 @@ The banner turns green (**PayPal Sandbox · live**). Start a preset, then:
 1. Before both parties approve, edit the payee e-mails to Sandbox Personal accounts (or the test receiver).
 2. Approve the terms as both parties.
 3. **Create PayPal order → Approve in PayPal Sandbox**, signing in as the Personal buyer.
-4. PayPal returns you to PactPay. Click **Authorize & verify hold**.
+4. PayPal returns you to YAVQEN. Click **Authorize & verify hold**. (PayPal's Checkout page shows the former name,
+   PactPay: that is the brand name the app sends to PayPal, which is intentionally unchanged.)
 5. Continue with Deliver, Verify and Decide. **Reconcile** reads every payout item back from PayPal.
 
 **Webhooks (optional).** PayPal can only deliver webhooks to a public HTTPS URL.

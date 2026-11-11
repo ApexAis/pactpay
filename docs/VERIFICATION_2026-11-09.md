@@ -1,5 +1,7 @@
 # Verification record, 2026-11-09 (owner's workstation: RTX 4090, Ubuntu)
 
+*Recorded when the product was named PactPay (now YAVQEN, renamed on 2026-11-11). The body is left as recorded; later notes carry their date.*
+
 Everything below was run on the workstation. A result not listed here was not run.
 
 ## 1. Starting point and baseline reproduction
@@ -111,6 +113,13 @@ The amount, criteria, reference tests and payees are unchanged. A preset chat's 
 so a pact created from a preset now gets a different terms fingerprint than the recorded runs. The evidence files
 above are unchanged and describe the runs as they happened. Those pacts were created from the original chat text
 (chat SHA-256 `d6cdd2761586f069…` for the $500 preset, as shown in the live run's screens and demo video).
+
+**Product renamed after these runs.** On 2026-11-11 the product was renamed YAVQEN for the hackathon presentation.
+The $500 preset's chat (`paypal_webhook_sprint`) now asks "so YAVQEN can test our upload?" instead of "so PactPay can
+test our upload?". Its amount, criteria, reference tests, payees and sample labels are unchanged (preset terms hash
+without parties `2ed70c335e5987fd…` before and after), but its chat SHA-256 changes from `a71154a195c28f56…` to
+`e90407c41405f15f…`, so a pact created from it again gets a different terms fingerprint. The $400 and $300 presets
+are unchanged. Request ids, `sender_batch_id`s and the evidence files keep the name PactPay.
 
 ## 7. Spending
 

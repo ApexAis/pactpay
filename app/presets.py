@@ -210,7 +210,7 @@ DEMO_PRESETS: dict[str, dict[str, Any]] = {
             "to my PayPal sandbox account `alex.dev.sandbox@example.com` (Lead Backend Engineer) and "
             "30% ($150) to Sam at `sam.docs.sandbox@example.com` (Technical Writer).\n\n"
             "@sam.docs (10:17 AM): Confirmed on the 70/30 split! What are the exact acceptance criteria "
-            "so PactPay can test our upload?\n\n"
+            "so YAVQEN can test our upload?\n\n"
             "@maya.client (10:19 AM): Let's make it a 4-point rubric (25% weight each):\n"
             "1. [25%] Webhook HMAC Verification: `verify_webhook_signature(payload: bytes, signature: str, "
             "webhook_secret: str) -> bool` using `hmac.compare_digest` and SHA-256 (hex digest) to validate incoming "

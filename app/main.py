@@ -107,7 +107,7 @@ def create_app(settings: Settings | None = None, *, transport: httpx.BaseTranspo
     service = Service(store, paypal, settings, evaluate=evaluate, reviewer=reviewer,
                       drafter=drafter if drafter is not None else completer(settings))
 
-    app = FastAPI(title="PactPay", version=__version__,
+    app = FastAPI(title="YAVQEN", version=__version__,
                   description="Milestone payments on PayPal Sandbox: funds held by an authorization, released by "
                               "people on evidence from executed acceptance tests.")
     app.state.service, app.state.settings = service, settings
@@ -232,7 +232,7 @@ def create_app(settings: Settings | None = None, *, transport: httpx.BaseTranspo
     @app.get("/", response_class=HTMLResponse, include_in_schema=False)
     async def index() -> Any:
         page = STATIC_DIR / "index.html"
-        return FileResponse(page) if page.exists() else HTMLResponse("<h1>PactPay API</h1><p>See /docs.</p>")
+        return FileResponse(page) if page.exists() else HTMLResponse("<h1>YAVQEN API</h1><p>See /docs.</p>")
 
     @app.get("/api/health")
     async def health() -> dict[str, Any]:

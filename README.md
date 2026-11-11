@@ -1,8 +1,14 @@
-# PactPay
+# YAVQEN
 
-**Agreements that pay out exactly as written.**
+**Evidence First. Humans Decide.** Agreements that pay out exactly as written.
 
-PactPay turns a freelance agreement into a locked payment policy: the amount in cents, acceptance criteria with
+> **Formerly PactPay.** The project was renamed YAVQEN on 11 Nov 2026 for the hackathon presentation. The
+> repository URL (`github.com/ApexAis/pactpay`), the environment variables (`PACTPAY_*`), internal identifiers,
+> PayPal Sandbox request ids and `sender_batch_id` prefixes (`pactpay-…`, `PACTPAY-…`), the texts the app sends
+> to PayPal (such as the Checkout brand name and payout e-mail subject), the recorded evidence in `evidence/` and
+> the 9 Nov demo recording keep the former name and are intentionally unchanged.
+
+YAVQEN turns a freelance agreement into a locked payment policy: the amount in cents, acceptance criteria with
 executable tests, and payees with exact shares. A PayPal authorization holds the client's payment. Agreed tests
 and an AI reviewer check the delivered work. **The AI can hold money back but can never release it**: a person
 releases, and PayPal's own records report every capture and each payee's payout status.
@@ -10,8 +16,8 @@ releases, and PayPal's own records report every capture and each payee's payout 
 Built for the PayPal AI Hackathon 2026 on the PayPal Developer Sandbox: Orders v2 (`intent: AUTHORIZE`),
 Payments v2 authorizations, captures and voids, Payouts v1, and Webhooks verification.
 
-> PactPay is a Sandbox demo. It is not an escrow service or a licensed money transmitter. PayPal does not read or
-> enforce the agreement: PactPay applies the locked terms, and PayPal processes and reports each payment operation.
+> YAVQEN is a Sandbox demo. It is not an escrow service or a licensed money transmitter. PayPal does not read or
+> enforce the agreement: YAVQEN applies the locked terms, and PayPal processes and reports each payment operation.
 > The SHA-256 terms fingerprint is not a legal signature. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) §8 for
 > every known limit.
 
@@ -20,7 +26,7 @@ Payments v2 authorizations, captures and voids, Payouts v1, and Webhooks verific
 | # | Step | What happens | PayPal |
 |---|---|---|---|
 | 1 | **Agree** | An AI drafts terms from the chat. Any requirement, e-mail or amount not found word for word in the chat is dropped and reported. Client and freelancer each approve one SHA-256 of the canonical terms; any edit cancels both approvals. | — |
-| 2 | **Fund** | The order is built from the locked terms. The buyer approves in PayPal Checkout. PactPay accepts the hold only after reading PayPal's order record (amount, currency, pact). | Orders v2 create, authorize, get |
+| 2 | **Fund** | The order is built from the locked terms. The buyer approves in PayPal Checkout. YAVQEN accepts the hold only after reading PayPal's order record (amount, currency, pact). | Orders v2 create, authorize, get |
 | 3 | **Deliver** | The freelancer submits code or Markdown; it is hashed. | — |
 | 4 | **Verify** | The agreed tests run in a `bwrap` sandbox. An AI reviewer then judges each criterion and must cite the work verbatim; code verifies every citation. Prompt injection in the work puts the affected criteria on hold for a person. | — |
 | 5 | **Decide** | The evaluation is a recommendation. The client releases (less than the full amount is a proposal the freelancer accepts or disputes); an arbiter decides disputes ($0 voids the hold). | — |
@@ -48,7 +54,7 @@ python scripts/ui_e2e.py http://127.0.0.1:8000 /tmp/pactpay-ui            # main
 python scripts/ui_dispute_e2e.py http://127.0.0.1:8000 /tmp/pactpay-dispute  # partial release, dispute, arbiter
 ```
 
-Without PayPal credentials, PactPay uses an offline PayPal protocol simulator and says so on every screen (yellow
+Without PayPal credentials, YAVQEN uses an offline PayPal protocol simulator and says so on every screen (yellow
 SIMULATOR banner); no PayPal account is contacted. Without an AI provider, the agreed tests still run, and AI-judged
 criteria go to human review.
 
@@ -102,18 +108,18 @@ evaluator falls back to a restricted subprocess and reports which isolation it u
 `scripts/eval_ai_reviewer.py` runs a hand-labelled set of 8 Markdown deliverables × 4 semantic criteria
 (`tests/fixtures/ai_eval/`). The deliverables are positive, paraphrased, keyword-stuffed, contradicting,
 prompt-injected, vague, unsafe and placeholder. They were run through a keyword rule baseline, the raw model, and
-the PactPay pipeline, plus the 15-case adversarial code corpus and the demo deliverables. All models ran locally.
+the YAVQEN pipeline, plus the 15-case adversarial code corpus and the demo deliverables. All models ran locally.
 
 <!-- EVAL_TABLE -->
 | System | Paid for an unmet requirement (false release) | Correct automatic verdicts | Held for a person | Held: injection detected |
 |---|---|---|---|---|
 | Keyword rule (all keywords present) | **6** of 17 | 21 of 32 | 0 | 0 |
 | gpt-oss:20b: model alone | **0** of 34 | 64 of 64 | 0 | 0 |
-| **gpt-oss:20b: PactPay pipeline** | **0** of 34 | 46 of 64 | 10 | 8 |
+| **gpt-oss:20b: YAVQEN pipeline** | **0** of 34 | 46 of 64 | 10 | 8 |
 | qwen3.8:27b: model alone | **2** of 34 | 62 of 64 | 0 | 0 |
-| **qwen3.8:27b: PactPay pipeline** | **0** of 34 | 56 of 64 | 0 | 8 |
+| **qwen3.8:27b: YAVQEN pipeline** | **0** of 34 | 56 of 64 | 0 | 8 |
 | ministral-3:8b: model alone | **2** of 34 | 62 of 64 | 0 | 0 |
-| **ministral-3:8b: PactPay pipeline** | **2** of 34 | 42 of 64 | 10 | 8 |
+| **ministral-3:8b: YAVQEN pipeline** | **2** of 34 | 42 of 64 | 10 | 8 |
 
 Executable criteria (19 deliverables, 15 of them adversarial: fake markers, hard-coded answers, harness tampering, network/subprocess attempts, infinite loops, prompt injection):
 
@@ -124,7 +130,7 @@ Executable criteria (19 deliverables, 15 of them adversarial: fake markers, hard
 | tests+qwen3.8:27b | 19 of 19 | 0 |
 | tests+ministral-3:8b | 19 of 19 | 0 |
 
-Labels: 15 pass and 17 fail criterion-cases per run, 2 run(s) per model, local models via Ollama. One label (d7 A1) was corrected after review, against PactPay; see `tests/fixtures/ai_eval/labels.json`. Source: `evidence/ai-eval/reviewer-gpt-oss-20b-qwen3.8-27b-ministral-3-8b-20261109T033712Z-retallied.json`.
+Labels: 15 pass and 17 fail criterion-cases per run, 2 run(s) per model, local models via Ollama. One label (d7 A1) was corrected after review, against YAVQEN; see `tests/fixtures/ai_eval/labels.json`. Source: `evidence/ai-eval/reviewer-gpt-oss-20b-qwen3.8-27b-ministral-3-8b-20261109T033712Z-retallied.json`.
 
 **What this shows.** On requirements that tests cannot check, the models judge far better than a keyword rule. The pipeline's checks (verified citations, injection hold, fail-closed) cost some automation: correct work is sometimes held for a person. They do not catch every semantic misjudgment: d7 A1, a guide that is correct except that it targets the live API, was passed by some models. That is why the AI only recommends, and a person releases.
 <!-- /EVAL_TABLE -->

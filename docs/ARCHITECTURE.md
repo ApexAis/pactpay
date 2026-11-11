@@ -1,6 +1,6 @@
-# PactPay architecture, payment safety and limits
+# YAVQEN architecture, payment safety and limits
 
-PactPay is a FastAPI service with one SQLite database, a PayPal REST client, a sandboxed evaluator and a
+YAVQEN is a FastAPI service with one SQLite database, a PayPal REST client, a sandboxed evaluator and a
 dependency-free web client. This document describes what the code does and does not do. File references are
 relative to the repository root.
 
@@ -51,7 +51,7 @@ and the approvals name that arbiter.
 * **Locking.** The canonical JSON of the terms (amount, criteria and tests, payees, parties, and the SHA-256 of the
   source agreement) is hashed with SHA-256. Client and freelancer each approve that exact hash. Any edit produces a
   new hash, and earlier approvals lapse. When both have approved, the terms are locked and can no longer change.
-  The hash is a tamper-evidence fingerprint inside PactPay; it is **not** a legal or cryptographic signature.
+  The hash is a tamper-evidence fingerprint inside YAVQEN; it is **not** a legal or cryptographic signature.
 * **Re-verification.** The PayPal order is built from the locked terms. Every evaluation records the hash it was
   made against. Release, accept and resolve all re-verify the stored terms against the locked hash before any
   capture.
@@ -63,13 +63,13 @@ All calls go to `https://api-m.sandbox.paypal.com`. `PAYPAL_MODE` cannot select 
 | Step | PayPal API | Safety property |
 |---|---|---|
 | Hold | `POST /v2/checkout/orders` (`intent: AUTHORIZE`, `reference_id`=pact, items per criterion) | `PayPal-Request-Id` = `pactpay-<pact>-order-<n>`: a replay returns the same order |
-| Buyer approval | PayPal Checkout (`payer-action` link) | Happens on paypal.com, never in PactPay. The simulator labels its stand-in as simulated |
+| Buyer approval | PayPal Checkout (`payer-action` link) | Happens on paypal.com, never in YAVQEN. The simulator labels its stand-in as simulated |
 | Authorize | `POST /v2/checkout/orders/{id}/authorize`, then `GET /v2/checkout/orders/{id}` | Accepted only if PayPal's record shows the authorization for the locked amount, currency and pact id |
 | Capture | `POST /v2/payments/authorizations/{id}/capture` (`final_capture: true`, `invoice_id` per release) | Deterministic `PayPal-Request-Id` per release. After PayPal's request-id window, a retry is refused as `DUPLICATE_INVOICE_ID` and the original capture is found in the order record |
 | Void | `POST /v2/payments/authorizations/{id}/void` | VOIDED only after PayPal's authorization record says so |
 | Split | `POST /v1/payments/payouts` (one batch, one item per payee) | `sender_batch_id` = `PACTPAY-<pact>-R<seq>`: PayPal refuses a duplicate within 30 days |
 | Reconcile | `GET` order / capture / payout batch | Each item's `transaction_status` is stored exactly as PayPal reports it (SUCCESS, UNCLAIMED, PENDING, FAILED, RETURNED, …) |
-| Webhooks | `POST /v1/notifications/verify-webhook-signature` (raw body, byte for byte) | Fails closed without `PAYPAL_WEBHOOK_ID`. Duplicate event ids are ignored. An event is only a pointer: PactPay re-reads the resource from PayPal, so order and replay do not matter |
+| Webhooks | `POST /v1/notifications/verify-webhook-signature` (raw body, byte for byte) | Fails closed without `PAYPAL_WEBHOOK_ID`. Duplicate event ids are ignored. An event is only a pointer: YAVQEN re-reads the resource from PayPal, so order and replay do not matter |
 
 **The split.** Payees share what PayPal says was received: the capture's `net_amount` after PayPal's fee. The split
 uses the largest-remainder method in integer cents, so the parts always sum to the net and no payee is off by more
@@ -77,15 +77,15 @@ than one cent. Before a batch is sent, `_payout` checks again that the items sum
 locked payees. If not, nothing is sent and the pact moves to `PAYOUT_ATTENTION`.
 
 **Authorization, capture and payout are separate facts.** A created order is not a hold. An authorization is not a
-capture. An accepted payout batch is not a payment: PactPay reports PAID_OUT only when every item is SUCCESS in
+capture. An accepted payout batch is not a payment: YAVQEN reports PAID_OUT only when every item is SUCCESS in
 PayPal's record.
 
 ## 5. Unknown outcomes and recovery
 
-| Situation | What PactPay does |
+| Situation | What YAVQEN does |
 |---|---|
 | Capture call times out / network error | Status stays CAPTURING. `reconcile` first looks for the release's capture in PayPal's order record (by `invoice_id`). It retries with the same `PayPal-Request-Id` only if none is found |
-| Capture answer lost and the retry falls after PayPal's idempotency window | PayPal refuses `DUPLICATE_INVOICE_ID`; PactPay adopts the existing capture |
+| Capture answer lost and the retry falls after PayPal's idempotency window | PayPal refuses `DUPLICATE_INVOICE_ID`; YAVQEN adopts the existing capture |
 | Capture PENDING | CAPTURE_PENDING. No payout until PayPal reports COMPLETED |
 | Payout create fails | The capture stands. `reconcile` retries with the same `sender_batch_id` |
 | Payout answer lost (PayPal says the batch already exists) | PAYOUT_ATTENTION. The batch is identified by PayPal's verified batch webhook, matched on `sender_batch_id` and confirmed by `GET` (tested with the offline simulator's signed webhooks; live webhook delivery to a public URL was not tested). A second batch is never sent |
@@ -118,8 +118,8 @@ response with `PayPal-Request-Id` and `paypal-debug-id`. Tokens are redacted.
 ## 8. Known limits (stated, not hidden)
 
 * **Not an escrow service.** PayPal holds funds through an authorization: a 3-day honor period, valid up to 29 days.
-  PactPay does not reauthorize and is not a licensed escrow or money transmitter. Funds are captured to the
-  merchant account that runs PactPay, then paid out from its balance.
+  YAVQEN does not reauthorize and is not a licensed escrow or money transmitter. Funds are captured to the
+  merchant account that runs YAVQEN, then paid out from its balance.
 * **Sandbox only.** Live mode would need PayPal's Payouts approval, real KYC, and a review of fees and refund flows.
 * **Who pays fees.** PayPal's capture fee is deducted before the split. Payout fees are charged to the sender's
   balance and are not deducted from payees.

@@ -33,7 +33,7 @@
     eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>',
     spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>',
   };
-  const MARK = '<svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0a5ad4"/><path d="M9 23V9h8a5 5 0 0 1 0 10h-4" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="21.5" cy="22.5" r="2.5" fill="#ffc439"/></svg>';
+  const MARK = '<svg class="brand__mark" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="yq-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CDBEFF"/><stop offset=".5" stop-color="#8A6CFF"/><stop offset="1" stop-color="#4E2FD6"/></linearGradient><linearGradient id="yq-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#yq-a)"/><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#yq-b)"/><path d="M37 31 L60 59 L83 31" fill="none" stroke="#FFFDF7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 71 V91" stroke="#FFFDF7" stroke-width="10" stroke-linecap="round"/><circle cx="60" cy="61" r="7.5" fill="#FFFDF7"/></svg>';
 
   const ROLE_LABEL = { client: "Client", freelancer: "Freelancer", arbiter: "Arbiter" };
   const ROLE_DESC = { client: "pays: approves terms, funds the hold, decides the release", freelancer: "delivers: approves terms, submits the work", arbiter: "decides only if the parties dispute" };
@@ -153,7 +153,7 @@
   }
 
   function topbar(inner = "") {
-    return `<header class="topbar"><a class="brand" href="/" data-action="home">${MARK}<span class="brand__name">PactPay</span></a>${inner}</header>`;
+    return `<header class="topbar"><a class="brand" href="/" data-action="home">${MARK}<span class="brand__text"><span class="brand__name">YAVQEN</span><span class="brand__tag">Evidence First. Humans Decide.</span></span></a>${inner}</header>`;
   }
 
   // ---------- start ----------
@@ -172,7 +172,7 @@
       <section class="hero">
         <span class="eyebrow">PayPal Sandbox · executable payment policy</span>
         <h1>Agreements that pay out exactly as written.</h1>
-        <p>PactPay turns a freelance agreement into a locked payment policy: amount in cents, acceptance tests, payees and shares.
+        <p>YAVQEN turns a freelance agreement into a locked payment policy: amount in cents, acceptance tests, payees and shares.
         A PayPal authorization holds the client's payment. Tests and an AI reviewer check the delivered work, but <strong>the AI can only hold money back</strong>:
         a person releases it, and PayPal's own records report every capture and each payee's payout status.</p>
       </section>
@@ -297,7 +297,7 @@
         + (S.role === "client" && st !== "CAPTURING" ? btn("release-again", "Try a second release", "btn--danger") : "");
     } else if (st === "PAID_OUT") {
       headline = "Paid out — every payee's item is SUCCESS in PayPal's record";
-      detail = "Try releasing again: PactPay refuses it, and PayPal would too (same PayPal-Request-Id / sender_batch_id).";
+      detail = "Try releasing again: YAVQEN refuses it, and PayPal would too (same PayPal-Request-Id / sender_batch_id).";
       ctas = btn("tab:evidence", `${ICON.shield} Evidence`, "btn--ok") + (S.role === "client" ? btn("release-again", "Try a second release", "btn--danger") : "");
     } else if (st === "VOIDED") {
       headline = "The authorization was voided: the buyer's funds are released"; detail = "Confirmed by PayPal's authorization record (status VOIDED).";
@@ -375,7 +375,7 @@
         <div class="${locked ? "lock" : "lock lock--open"}">${locked ? ICON.lock : ICON.unlock}<div><div class="strong">${locked ? "Terms locked by both parties" : "Not locked yet"}</div>
           <div class="tiny">SHA-256 of the canonical terms (amount, criteria, tests, payees, parties, chat hash):</div>
           <div class="hash" style="margin-top:4px"><span class="break">${esc(p.locked_terms_sha256 || p.terms_sha256)}</span><button data-action="copy" data-text="${esc(p.locked_terms_sha256 || p.terms_sha256)}" title="Copy">${ICON.copy}</button></div>
-          <div class="tiny" style="margin-top:6px">A fingerprint for tamper-evidence inside PactPay — not a legal or cryptographic signature.</div></div></div>
+          <div class="tiny" style="margin-top:6px">A fingerprint for tamper-evidence inside YAVQEN — not a legal or cryptographic signature.</div></div></div>
         <div class="card"><div class="card__title" style="margin-bottom:8px">Approvals</div><div class="approvals">${approvals}</div></div>
         <div class="card"><div class="card__head"><div class="card__title">Source agreement</div><span class="tiny muted">${esc(p.drafted_by)}</span></div>
           <div class="chat">${highlightChat(S.chat || "", (t.criteria || []).map((c) => c.source_quote))}</div>
@@ -409,10 +409,10 @@
     return `<div class="split"><div class="card"><div class="card__head"><div class="card__title">Hold the funds with PayPal</div><span class="chip ${live ? "chip--live" : "chip--sim"}">${live ? "Live Sandbox" : "Simulator"}</span></div>
       <ol class="steps-list">
         ${item(ordered, st === "TERMS_APPROVED", 1, "Create order — <code>POST /v2/checkout/orders</code>", ordered ? `<dl class="kv"><dt>Order</dt><dd class="mono">${esc(pp.order_id)}</dd><dt>Intent</dt><dd>AUTHORIZE · ${usd(p.terms.amount_cents)} · reference_id ${esc(p.pact_id)}</dd><dt>PayPal status</dt><dd>${esc(pp.order_status)}</dd></dl>` : '<span class="muted small">Built only from the locked terms; PayPal-Request-Id makes a retry return the same order.</span>')}
-        ${item(approved, st === "AWAITING_BUYER_APPROVAL" && !held, 2, "Buyer approves in PayPal Checkout", live ? (pp.approve_url ? `<a class="btn btn--sm" href="${esc(pp.approve_url)}">Open PayPal Sandbox approval</a><span class="tiny muted">Approval happens on paypal.com, never in PactPay.</span>` : "") : '<span class="sim-label">SIMULATED — in live mode this is PayPal Checkout</span>')}
+        ${item(approved, st === "AWAITING_BUYER_APPROVAL" && !held, 2, "Buyer approves in PayPal Checkout", live ? (pp.approve_url ? `<a class="btn btn--sm" href="${esc(pp.approve_url)}">Open PayPal Sandbox approval</a><span class="tiny muted">Approval happens on paypal.com, never in YAVQEN.</span>` : "") : '<span class="sim-label">SIMULATED — in live mode this is PayPal Checkout</span>')}
         ${item(held, st === "AWAITING_BUYER_APPROVAL", 3, "Authorize & verify — <code>POST …/authorize</code>, then <code>GET</code> the order", held ? `<dl class="kv"><dt>Authorization</dt><dd class="mono">${esc(pp.authorization_id)}</dd><dt>PayPal status</dt><dd>${esc(pp.authorization_status)}</dd><dt>Held</dt><dd class="strong">${usd(pp.authorized_cents)}</dd><dt>Expires</dt><dd>${when(pp.authorization_expires_at)}</dd></dl><div class="callout callout--ok">${ICON.shield}<div>Accepted only because PayPal's record of the order shows this authorization for exactly the locked amount, currency and pact id.</div></div>` : '<span class="muted small">Refused unless PayPal\'s own record matches the locked amount and pact.</span>')}
       </ol></div>
-      <div class="stack-lg"><div class="card card--soft"><div class="card__title">Why an authorization?</div><p class="small muted" style="margin-top:6px">PayPal places a hold on the buyer's funds without moving them. PactPay captures later, once, for the amount a person decides — or voids the hold. PayPal's authorization is honoured for 3 days and valid for up to 29; PactPay is a demo of this lifecycle, not an escrow service.</p></div>
+      <div class="stack-lg"><div class="card card--soft"><div class="card__title">Why an authorization?</div><p class="small muted" style="margin-top:6px">PayPal places a hold on the buyer's funds without moving them. YAVQEN captures later, once, for the amount a person decides — or voids the hold. PayPal's authorization is honoured for 3 days and valid for up to 29; YAVQEN is a demo of this lifecycle, not an escrow service.</p></div>
       ${st === "FUNDS_HELD" && S.role === "client" ? `<div class="card"><div class="card__title">Cancel before delivery</div><p class="small muted">Voids the authorization at PayPal and confirms VOIDED from PayPal's record.</p><div style="margin-top:8px">${btn("void", "Void hold", "btn--danger")}</div></div>` : ""}</div></div>`;
   }
 
@@ -589,7 +589,7 @@
     const live = S.traces?.mode === "live_sandbox";
     root.innerHTML = `<div class="drawer-backdrop" data-action="close-drawer"></div><aside class="drawer" role="dialog" aria-label="PayPal calls">
       <div class="drawer__head"><h2>PayPal REST calls</h2><span class="chip ${live ? "chip--live" : "chip--sim"}">${live ? "Live Sandbox" : "Simulator"}</span><button class="btn btn--sm btn--ghost" data-action="close-drawer">Close</button></div>
-      <div class="drawer__note small muted">Every request PactPay sent and PayPal's answer, with PayPal-Request-Id and paypal-debug-id. Tokens are redacted.</div>
+      <div class="drawer__note small muted">Every request YAVQEN sent and PayPal's answer, with PayPal-Request-Id and paypal-debug-id. Tokens are redacted.</div>
       <div class="drawer__body">${tr.length ? tr.slice().reverse().map((t) => `<details class="trace ${live ? "trace--live" : "trace--sim"}"><summary><span class="trace__top"><span class="http http--${String(t.status_code)[0]}">${esc(t.status_code)}</span><span class="trace__step">${esc(t.step)}</span><span class="trace__ep">${esc(t.method)} ${esc(t.endpoint)}</span></span>
         <span class="trace__meta"><span>${when(t.at)}</span><span>${Number(t.duration_ms).toFixed(0)} ms</span>${t.paypal_request_id ? `<span class="mono">req ${esc(t.paypal_request_id)}</span>` : ""}${t.paypal_debug_id ? `<span class="mono">debug ${esc(t.paypal_debug_id)}</span>` : ""}</span></summary>
         <pre class="trace__json">${esc(JSON.stringify({ request: t.request, response: t.response }, null, 1))}</pre></details>`).join("") : '<p class="muted">No PayPal calls yet.</p>'}</div></aside>`;
@@ -748,7 +748,7 @@
         if (q.get("paypal") === "cancel") toast("The buyer cancelled in PayPal.", true);
       } else render();
     } catch (e) {
-      $("#app").innerHTML = `<div class="err" style="margin-top:24px">${ICON.alert} PactPay could not start: ${esc(e.message)}</div>`;
+      $("#app").innerHTML = `<div class="err" style="margin-top:24px">${ICON.alert} YAVQEN could not start: ${esc(e.message)}</div>`;
     }
   })();
 })();
