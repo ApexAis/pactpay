@@ -1,4 +1,4 @@
-"""PactPay: AI-adjudicated milestone escrow and split-payout engine on PayPal Sandbox."""
+"""PactPay: milestone payment policies on PayPal Sandbox. Tests and an AI reviewer recommend; a person releases."""
 
 __version__: str = "1.0.0"
 

@@ -12,7 +12,7 @@ Systems compared on the docs set:
   keyword   - PASS when every keyword of the criterion appears (a typical rule baseline)
   ai_only   - the model's raw per-criterion verdict, no citation check, no injection guard
   pactpay   - app.evaluation.evaluate(): verdicts count only with verbatim-verified citations, prompt-injection
-              detection holds the money, anything uncertain goes to NEEDS_HUMAN_REVIEW
+              detection holds the criterion for a person, anything uncertain goes to NEEDS_HUMAN_REVIEW
 
 A "false release" is PASS for a criterion labelled fail: the money-losing error. "Held" is NEEDS_HUMAN_REVIEW:
 safe, but a person must look.

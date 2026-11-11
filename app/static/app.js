@@ -56,7 +56,7 @@
     FUNDS_HELD: "Funds held by PayPal", SUBMITTED: "Work submitted", AUDITED: "Evaluated — awaiting decision",
     RELEASE_PROPOSED: "Partial release proposed", DISPUTED: "In dispute", CAPTURING: "Capturing",
     CAPTURE_PENDING: "Capture pending at PayPal", CAPTURE_FAILED: "Capture failed", CAPTURED: "Captured",
-    PAYOUT_PENDING: "Payout in progress", PAID_OUT: "Paid out", PAYOUT_UNCLAIMED: "Paid / unclaimed by a payee",
+    PAYOUT_PENDING: "Payout in progress", PAID_OUT: "Paid out", PAYOUT_UNCLAIMED: "Payout unclaimed by a payee",
     PAYOUT_ATTENTION: "Payout needs attention", VOIDED: "Authorization voided", CANCELLED: "Cancelled",
   };
 
@@ -173,8 +173,8 @@
         <span class="eyebrow">PayPal Sandbox · executable payment policy</span>
         <h1>Agreements that pay out exactly as written.</h1>
         <p>PactPay turns a freelance agreement into a locked payment policy: amount in cents, acceptance tests, payees and shares.
-        PayPal holds the client's funds with an authorization. Tests and an AI reviewer check the delivered work, but <strong>the AI can only hold money back</strong>:
-        a person releases it, and PayPal's own records confirm every capture and payout.</p>
+        A PayPal authorization holds the client's payment. Tests and an AI reviewer check the delivered work, but <strong>the AI can only hold money back</strong>:
+        a person releases it, and PayPal's own records report every capture and each payee's payout status.</p>
       </section>
       <div class="how">
         <div class="how__item"><span class="how__n">1</span><span class="how__t">Agree</span><span class="how__d">AI drafts terms from the chat; anything not found verbatim in the chat is dropped. Both parties approve one SHA-256.</span></div>
@@ -291,7 +291,7 @@
       detail = "The arbiter sees the same evidence and decides an amount between $0 (void the hold) and the authorized amount.";
       if (mine) ctas = btn("tab:decide", "Open dispute", "btn--primary");
     } else if (["CAPTURING", "CAPTURE_PENDING", "CAPTURED", "PAYOUT_PENDING", "PAYOUT_UNCLAIMED", "PAYOUT_ATTENTION"].includes(st)) {
-      headline = { CAPTURING: "Capture in flight — reconcile reads PayPal's record", CAPTURE_PENDING: "PayPal reports the capture PENDING", CAPTURED: "Captured — payout batch next", PAYOUT_PENDING: "Payouts batch created — waiting for PayPal's per-payee results", PAYOUT_UNCLAIMED: "Paid; a payee has not claimed their payout yet", PAYOUT_ATTENTION: "A payout item failed or is unconfirmed" }[st];
+      headline = { CAPTURING: "Capture in flight — reconcile reads PayPal's record", CAPTURE_PENDING: "PayPal reports the capture PENDING", CAPTURED: "Captured — payout batch next", PAYOUT_PENDING: "Payouts batch created — waiting for PayPal's per-payee results", PAYOUT_UNCLAIMED: "Payout incomplete: a payee has not claimed their payout yet", PAYOUT_ATTENTION: "A payout item failed or is unconfirmed" }[st];
       detail = "Statuses are only what PayPal reports. Reconcile re-reads PayPal; it never resends money.";
       ctas = (live ? "" : btn("webhooks", "Deliver PayPal webhooks", "btn--sim")) + btn("reconcile", "Reconcile with PayPal", "btn--primary")
         + (S.role === "client" && st !== "CAPTURING" ? btn("release-again", "Try a second release", "btn--danger") : "");
@@ -412,7 +412,7 @@
         ${item(approved, st === "AWAITING_BUYER_APPROVAL" && !held, 2, "Buyer approves in PayPal Checkout", live ? (pp.approve_url ? `<a class="btn btn--sm" href="${esc(pp.approve_url)}">Open PayPal Sandbox approval</a><span class="tiny muted">Approval happens on paypal.com, never in PactPay.</span>` : "") : '<span class="sim-label">SIMULATED — in live mode this is PayPal Checkout</span>')}
         ${item(held, st === "AWAITING_BUYER_APPROVAL", 3, "Authorize & verify — <code>POST …/authorize</code>, then <code>GET</code> the order", held ? `<dl class="kv"><dt>Authorization</dt><dd class="mono">${esc(pp.authorization_id)}</dd><dt>PayPal status</dt><dd>${esc(pp.authorization_status)}</dd><dt>Held</dt><dd class="strong">${usd(pp.authorized_cents)}</dd><dt>Expires</dt><dd>${when(pp.authorization_expires_at)}</dd></dl><div class="callout callout--ok">${ICON.shield}<div>Accepted only because PayPal's record of the order shows this authorization for exactly the locked amount, currency and pact id.</div></div>` : '<span class="muted small">Refused unless PayPal\'s own record matches the locked amount and pact.</span>')}
       </ol></div>
-      <div class="stack-lg"><div class="card card--soft"><div class="card__title">Why an authorization?</div><p class="small muted" style="margin-top:6px">PayPal places a hold on the buyer's funds without moving them. PactPay captures later, once, for the amount a person decides — or voids the hold. PayPal's authorization is honoured for 3 days and valid for up to 29; PactPay is a demo of this lifecycle, not a licensed escrow service.</p></div>
+      <div class="stack-lg"><div class="card card--soft"><div class="card__title">Why an authorization?</div><p class="small muted" style="margin-top:6px">PayPal places a hold on the buyer's funds without moving them. PactPay captures later, once, for the amount a person decides — or voids the hold. PayPal's authorization is honoured for 3 days and valid for up to 29; PactPay is a demo of this lifecycle, not an escrow service.</p></div>
       ${st === "FUNDS_HELD" && S.role === "client" ? `<div class="card"><div class="card__title">Cancel before delivery</div><p class="small muted">Voids the authorization at PayPal and confirms VOIDED from PayPal's record.</p><div style="margin-top:8px">${btn("void", "Void hold", "btn--danger")}</div></div>` : ""}</div></div>`;
   }
 

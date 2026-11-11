@@ -1,4 +1,4 @@
-[WhatsApp: receipt emailer]
+[Team chat: receipt emailer]
 Lina (client): Can you two build our PayPal receipt helper by Friday? Budget is $600.
 Noor: Yes. I write the code, Omar tests and documents it. Split it 65% to me (noor.dev.sandbox@example.com) and 35% to Omar (omar.qa.sandbox@example.com).
 Lina: Deal. It must have:

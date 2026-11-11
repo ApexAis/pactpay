@@ -18,6 +18,9 @@ re-implemented on this lineage.
 
 ## 2. Defects found and fixed (each pinned by a test)
 
+Commit ids below refer to the development history, which is not published. The public repository is one release
+commit whose tree is that history's final state.
+
 | Pri | Defect | Fix / commit |
 |---|---|---|
 | P0 | Terms validation accepted share sets of 10,001 or 9,999 basis points (float tolerance). `split_cents` then paid up to ~1 % more than PayPal captured, or left money unallocated. Found by fuzzing: `[33.3, 66.71]` gave +12 cents | Exact basis points; `split_cents` refuses anything else and asserts conservation; `_payout` refuses any batch that does not sum to the net or names anyone outside the locked terms (`7ec3980`) |
@@ -41,7 +44,7 @@ re-implemented on this lineage.
 | Unit, integration, concurrency and property tests | `PACTPAY_DB_PATH=:memory: python -m pytest -q` | **138 passed** (a clean clone with a fresh venv at 135 tests also passed) |
 | New money-safety tests against the pre-fix code | same file on the previous commit | **16 of 30 failed** before the fixes (they detect the defects) |
 | Offline walkthrough | `python scripts/offline_walkthrough.py` | PAID_OUT; split sums to the net; second release refused (409); hash chain valid |
-| Browser end-to-end (Chromium): main journey | `python scripts/ui_e2e.py <url> <out>` | 16 screens, 0 console errors. Flawed 75 %, injection 0 % (flagged), fixed 100 %, paid out, second release refused, evidence chain intact |
+| Browser end-to-end (Chromium): main journey | `python scripts/ui_e2e.py <url> <out>` | 16 screens with an AI reviewer configured (15 without one: there is no citation to open), 0 console errors. Flawed 75 %, injection 0 % (flagged), fixed 100 %, paid out, second release refused, evidence chain intact |
 | Browser end-to-end: decisions | `python scripts/ui_dispute_e2e.py <url> <out>` | Edited terms give a new fingerprint. An override without a reason is refused; partial proposal, freelancer dispute, arbiter decides $337.50 of the edited $450, captured. An UNCLAIMED payee is shown as reported |
 | HTTP walkthrough with a real local model | `python scripts/api_walkthrough.py` | Flawed 75 % (28 s), fixed 100 % (14 s), reviewer `gpt-oss:20b` status ok with verified citations |
 | Secret scan (tree and full history) | `git grep` / `git log -p` for key patterns | None found |
@@ -77,12 +80,19 @@ Labels: 15 pass and 17 fail criterion-cases per run, 2 run(s) per model, local m
 
 ## 5. Demo video
 
-**Final video, recorded against the live PayPal Sandbox:** `pactpay_demo_LIVE_SANDBOX.mp4` (published separately, on YouTube)
+**Live demo recording, made against the live PayPal Sandbox:** `pactpay_demo_LIVE_SANDBOX.mp4` (not in this
+repository; the video link is in the Devpost entry)
 (sha256 `151044041f81ff49…`). It is 2:47.6 at 1920×1080, with narration by a local model (Kokoro), captions burned
 in and an SRT file alongside. It shows the real app with the green LIVE SANDBOX banner. Six real waits are cut and
 labelled on screen with their true length: AI drafting 23 s, the owner's approval in PayPal Checkout 92 s, three
 evaluations, and PayPal processing the payout batch 37 s. The PayPal records behind it are in
 `evidence/live-sandbox/video-20261109T0840Z.json`. An earlier simulator-mode draft is kept for reference.
+
+Three narrated lines in that recording are imprecise; `scripts/video/narration.json` now has the corrected wording.
+(1) PayPal does not enforce the policy: PactPay applies it, and PayPal processes and reports each payment step.
+(2) In the final evaluation, the AI's citation for C1 did not verify, and the screen shows it as "not counted", so
+not every AI verdict had a verified quote; C1 passed on its agreed tests. (3) The second release was refused by
+PactPay, so PayPal never received a second capture request; PayPal's record shows one capture and one payout.
 
 ## 6. PayPal Sandbox
 
@@ -94,6 +104,13 @@ evaluations, and PayPal processing the payout batch 37 s. The PayPal records beh
 | Live demo-video run (`evidence/live-sandbox/video-20261109T0840Z.json`) | **PASS, 18 calls, all `live_sandbox`**: order `8MH85650S41567000`, authorization `09W85969TX3366108`, capture `3V818276N9145912L` (fee $24.80, net $475.20), batch `QA35RLSW9N842` with SUCCESS and UNCLAIMED items |
 | Credentials | The Sandbox app keys came from the owner's secret store and were passed to the scripts in memory only; they were never printed, logged or committed. No buyer login is stored: the owner approved in Checkout. The PayPal client's base URL is the constant `https://api-m.sandbox.paypal.com` |
 | Webhook delivery from PayPal to a public URL | **NOT RUN.** It needs a public HTTPS URL. Reconcile polling reaches the same states |
+
+**Demo chat headers renamed after these runs.** On 2026-11-11 the demo presets' chat headers were changed to neutral
+names ("[Team chat #project-checkout]", "[Team chat #devrel-bounty]") and the sample submission labels were reworded.
+The amount, criteria, reference tests and payees are unchanged. A preset chat's hash is part of the canonical terms,
+so a pact created from a preset now gets a different terms fingerprint than the recorded runs. The evidence files
+above are unchanged and describe the runs as they happened. Those pacts were created from the original chat text
+(chat SHA-256 `d6cdd2761586f069…` for the $500 preset, as shown in the live run's screens and demo video).
 
 ## 7. Spending
 

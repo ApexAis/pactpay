@@ -202,7 +202,7 @@ DEMO_PRESETS: dict[str, dict[str, Any]] = {
         "total_amount_usd": 500.00,
         "currency": "USD",
         "chat_text": (
-            "[Slack #project-checkout-escrow]\n"
+            "[Team chat #project-checkout]\n"
             "@maya.client (10:14 AM): Hey @alex.dev and @sam.docs! We need the PayPal Sandbox "
             "webhook verification & split-settlement module wrapped up today. Total milestone budget "
             "is $500 USD locked in a PayPal Authorization Hold.\n\n"
@@ -226,13 +226,13 @@ DEMO_PRESETS: dict[str, dict[str, Any]] = {
         ),
         "flawed_submission": {
             "filename": "webhook_deliverable_v1_draft.py",
-            "label": "Draft v1 (Missing Idempotency Handler -> Scores 75/100 -> $375 Prorated Capture)",
+            "label": "Draft v1 (idempotency handler missing; $375 recommended)",
             "expected_score": 75.0,
             "content": FLAWED_SUBMISSION_CODE,
         },
         "fixed_submission": {
             "filename": "webhook_deliverable_v2_final.py",
-            "label": "Final v2 (All 4 Criteria Passing -> Scores 100/100 -> Full $500 Capture + $350/$150 Payout)",
+            "label": "Final v2 (all 4 criteria met; $500 recommended)",
             "expected_score": 100.0,
             "content": FIXED_SUBMISSION_CODE,
         },
@@ -252,7 +252,7 @@ DEMO_PRESETS: dict[str, dict[str, Any]] = {
         "total_amount_usd": 400.00,
         "currency": "USD",
         "chat_text": (
-            "[Discord #devrel-bounty]\n"
+            "[Team chat #devrel-bounty]\n"
             "@jordan.pm: Need a comprehensive Markdown migration guide for our merchants upgrading to "
             "PayPal Orders v2 (`intent: AUTHORIZE`) and Batch Payouts. Budget is $400 USD.\n"
             "@riley.arch: I'll write the architecture & API snippets for 60% ($240 -> "
@@ -267,13 +267,13 @@ DEMO_PRESETS: dict[str, dict[str, Any]] = {
         ),
         "flawed_submission": {
             "filename": "migration_guide_draft.md",
-            "label": "Draft Guide (Missing Payouts Section -> Scores 75/100 -> $300 Prorated Capture)",
+            "label": "Draft guide (Payouts section missing; $300 recommended)",
             "expected_score": 75.0,
             "content": API_DOC_FLAWED,
         },
         "fixed_submission": {
             "filename": "migration_guide_final.md",
-            "label": "Final Guide (Complete 4-Section Spec -> Scores 100/100 -> Full $400 Capture)",
+            "label": "Final guide (all 4 sections; $400 recommended)",
             "expected_score": 100.0,
             "content": API_DOC_FIXED,
         },

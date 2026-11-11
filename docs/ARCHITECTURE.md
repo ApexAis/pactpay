@@ -88,7 +88,7 @@ PayPal's record.
 | Capture answer lost and the retry falls after PayPal's idempotency window | PayPal refuses `DUPLICATE_INVOICE_ID`; PactPay adopts the existing capture |
 | Capture PENDING | CAPTURE_PENDING. No payout until PayPal reports COMPLETED |
 | Payout create fails | The capture stands. `reconcile` retries with the same `sender_batch_id` |
-| Payout answer lost (PayPal says the batch already exists) | PAYOUT_ATTENTION. The batch is identified by PayPal's verified batch webhook, matched on `sender_batch_id` and confirmed by `GET`. A second batch is never sent |
+| Payout answer lost (PayPal says the batch already exists) | PAYOUT_ATTENTION. The batch is identified by PayPal's verified batch webhook, matched on `sender_batch_id` and confirmed by `GET` (tested with the offline simulator's signed webhooks; live webhook delivery to a public URL was not tested). A second batch is never sent |
 | Process restart | `recover_all` reconciles every pact with money in flight |
 | Authorization expired or voided at PayPal | `reconcile` moves the pact to VOIDED from PayPal's record |
 

@@ -4,26 +4,33 @@
 submitting if anything is re-run.*
 
 ## Tagline
-Agreements that pay out exactly as written: PayPal holds the money, tests and AI check the work, and people release it.
+Agreements that pay out as agreed: a PayPal authorization holds the payment, tests and an AI reviewer check the
+work, and a person releases it.
 
 ## Inspiration
 Small teams of freelancers get paid on trust. The client either pays up front and hopes, or the team delivers first
-and hopes, and then someone splits the money by hand. Marketplace escrow is expensive and opaque, and "AI escrow"
-demos tend to let a model decide when money moves. We wanted the agreement itself to be the program: precise enough
-that PayPal can enforce it, readable enough that both sides can approve it, with an AI that helps but cannot be
-talked into paying.
+and hopes, and then someone splits the money by hand. Some AI payment demos also let a model decide when money moves.
+We wanted the agreement itself to become the payment policy: precise enough that PactPay can apply it step by step
+while PayPal processes and reports each payment operation, readable enough that both sides can approve its SHA-256
+fingerprint, with an AI that helps review the work but cannot be talked into paying.
+
+> PactPay is a PayPal Sandbox demo. It is not an escrow service or a licensed money transmitter. Its SHA-256 terms
+> fingerprint is tamper evidence inside PactPay, not a legal signature. PayPal processes and reports the payment
+> operations; it does not read or enforce the agreement.
 
 ## What it does
-PactPay turns a freelance agreement into a locked payment policy and runs it on PayPal.
+PactPay turns a freelance agreement into a locked payment policy and applies it itself; PayPal's Sandbox APIs process
+and report each payment operation.
 
 1. **Agree.** An AI drafts the policy from the chat: the amount in cents, acceptance criteria, payees with shares in
    basis points, and, for code, executable acceptance tests. Anything it cannot quote verbatim from the chat is
    dropped and reported. The client and freelancer each approve one SHA-256 of the canonical terms; any edit cancels
    both approvals.
 2. **Fund.** PayPal Orders v2 with `intent: AUTHORIZE`. The buyer approves in PayPal Checkout. PactPay accepts the
-   hold only after reading PayPal's order record and finding the locked amount and pact.
+   hold only after reading PayPal's order record and finding the locked amount and the pact id PactPay attached to
+   the order.
 3. **Verify.** The agreed tests run in an isolated sandbox. An AI reviewer judges each criterion and must cite the
-   exact lines; code verifies every quote. Prompt injection in the work is detected and holds the money. The AI can
+   exact lines; code verifies every quote. Prompt injection in the work is detected and puts the affected criteria on hold. The AI can
    turn a pass into "needs human review", never a failure into a payment.
 4. **Decide.** The client releases (anything less than the full hold is a proposal the freelancer accepts or
    disputes), or an arbiter decides. $0 voids the authorization.
@@ -63,12 +70,15 @@ PactPay turns a freelance agreement into a locked payment policy and runs it on 
 <!-- /EVAL_DEVPOST -->
 
 ## Verified on the live PayPal Sandbox
-These are real Sandbox calls, recorded in `evidence/live-sandbox/`. The demo video was recorded live too.
+These are real Sandbox calls, recorded in `evidence/live-sandbox/e2e-20261109T050830Z.json`. The PayPal results in
+the demo video come from a second live run the same day (`evidence/live-sandbox/video-20261109T0840Z.json`: capture
+`3V818276N9145912L`, Payouts batch `QA35RLSW9N842`, the same amounts and statuses).
 
 1. The buyer approved in PayPal Checkout. Authorization `93442531YL256941R` was CREATED for $500.00, verified from
    PayPal's order record.
 2. Capture `62V48776D0025551B` COMPLETED: fee $24.80, net $475.20.
-3. One Payouts batch: $332.64 SUCCESS, and $142.56 UNCLAIMED for a payee without a PayPal account.
+3. One Payouts batch: $332.64 SUCCESS, and $142.56 UNCLAIMED (`RECEIVER_UNREGISTERED`): that payee has no Sandbox
+   account, so the item is not paid unless it is claimed.
 4. A second release was refused, and PayPal received exactly one capture and one payout.
 
 ## Challenges we ran into
@@ -85,8 +95,10 @@ These are real Sandbox calls, recorded in `evidence/live-sandbox/`. The demo vid
   * We added injection patterns that our evaluation showed were missing.
 
 ## Accomplishments we're proud of
-* An AI that is useful and safe. On our labelled set it judged prose requirements that no test can check, and the
-  pipeline never recommended paying for an unmet requirement (see the measured table).
+* An AI that is useful and kept on a short leash. On our hand-labelled set it judged prose requirements that no test
+  can check. Across 2 runs per model (17 unmet requirements per run), the PactPay pipeline recommended paying for an
+  unmet requirement 0 of 34 times with gpt-oss:20b, 0 of 34 with qwen3.8:27b and 2 of 34 with ministral-3:8b; a
+  keyword rule would have paid for 6 of 17. Those misses are why a person always releases.
 * The authorization hold and multi-payee Payouts in one lifecycle, reconciled per recipient.
 * 138 automated tests, including concurrency, lost-answer recovery, forged webhooks, tampered terms and a 15-case
   adversarial deliverable corpus. A Chromium end-to-end run clicks the whole journey.
@@ -107,7 +119,7 @@ python · fastapi · sqlite · paypal-orders-v2 · paypal-payments-v2 · paypal-
 gpt-oss · bubblewrap · playwright · javascript
 
 ## Try it
-* Repository: <REPO_URL>
+* Repository: https://github.com/ApexAis/pactpay
 * Run locally: `pip install -r requirements.txt && uvicorn app.main:app` (offline simulator) or with Sandbox
   credentials ([docs/SANDBOX_SETUP.md](docs/SANDBOX_SETUP.md)).
-* Video: <VIDEO_URL>
+* Video: linked from the Devpost entry.

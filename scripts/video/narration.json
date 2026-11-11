@@ -5,7 +5,7 @@
  "scenes": {
   "s01_hook": {
    "caption": "PactPay: agreements that pay out exactly as written",
-   "narration": "Freelance teams still get paid on trust, and split the money by hand. PactPay turns the agreement into a payment policy that PayPal enforces. Its AI can hold money back. It can never release it."
+   "narration": "Freelance teams still get paid on trust, and split the money by hand. PactPay turns the agreement into a locked payment policy, and PayPal processes every payment step. Its AI can hold money back. It can never release it."
   },
   "s02_agreement": {
    "caption": "1 · Describe the agreement in plain words",
@@ -52,8 +52,8 @@
    "narration": "Then the real final version."
   },
   "s12_fixed_result": {
-   "caption": "All tests pass · AI verdicts verified · 100%",
-   "narration": "Every test passes, and every AI verdict is backed by a verified quote."
+   "caption": "All tests pass · only verified AI quotes count · 100%",
+   "narration": "Every test passes. An AI verdict counts only with a verified quote."
   },
   "s13_release": {
    "caption": "5 · A person releases — PayPal captures, then pays out",
@@ -65,7 +65,7 @@
   },
   "s15_duplicate": {
    "caption": "A second release is refused",
-   "narration": "A second release is refused, by PactPay, and by PayPal's idempotency too."
+   "narration": "A second release is refused by PactPay. PayPal's record shows one capture and one payout."
   },
   "s16_evidence": {
    "caption": "6 · Evidence: hash-chained log + every PayPal call",
