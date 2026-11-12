@@ -1,25 +1,81 @@
 # YAVQEN
 
-**Evidence First. Humans Decide.** Agreements that pay out exactly as written.
+**Evidence First. Humans Decide.** Milestone payments on the PayPal Sandbox: both sides lock the agreement, the
+work is tested against it, a person releases the money, and PayPal's own records report each payee's status.
+Built for the PayPal AI Hackathon 2026.
 
-> **Formerly PactPay.** The project was renamed YAVQEN on 11 Nov 2026 for the hackathon presentation. The
-> repository URL (`github.com/ApexAis/pactpay`), the environment variables (`PACTPAY_*`), internal identifiers,
-> PayPal Sandbox request ids and `sender_batch_id` prefixes (`pactpay-…`, `PACTPAY-…`), the texts the app sends
-> to PayPal (such as the Checkout brand name and payout e-mail subject), the recorded evidence in `evidence/` and
-> the 9 Nov demo recording keep the former name and are intentionally unchanged.
+**Video:** VIDEO_URL_TBD · **Run and test it:** [commands](#run-and-verify-it) (138 tests, offline) ·
+**Live Sandbox evidence:** [evidence/live-sandbox/](evidence/live-sandbox/) · **License:** [MIT](LICENSE)
 
-YAVQEN turns a freelance agreement into a locked payment policy: the amount in cents, acceptance criteria with
-executable tests, and payees with exact shares. A PayPal authorization holds the client's payment. Agreed tests
-and an AI reviewer check the delivered work. **The AI can hold money back but can never release it**: a person
-releases, and PayPal's own records report every capture and each payee's payout status.
+> **Formerly PactPay** (renamed 11 Nov 2026). The repository URL, `PACTPAY_*` variables, internal identifiers,
+> PayPal request ids and `sender_batch_id`s (`pactpay-…`, `PACTPAY-…`), texts sent to PayPal (such as the Checkout
+> brand name), the recorded evidence in `evidence/` and the 9 Nov demo recording keep the former name on purpose.
 
-Built for the PayPal AI Hackathon 2026 on the PayPal Developer Sandbox: Orders v2 (`intent: AUTHORIZE`),
-Payments v2 authorizations, captures and voids, Payouts v1, and Webhooks verification.
+## What it solves, and for whom
 
-> YAVQEN is a Sandbox demo. It is not an escrow service or a licensed money transmitter. PayPal does not read or
-> enforce the agreement: YAVQEN applies the locked terms, and PayPal processes and reports each payment operation.
-> The SHA-256 terms fingerprint is not a legal signature. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) §8 for
-> every known limit.
+In the demo preset, Maya (client) agrees a $500 milestone with Alex and Sam in a team chat: four requirements, a
+70/30 split. In an ordinary freelance payment those terms stay in the chat, the client judges the delivery by eye,
+and someone splits the money by hand. YAVQEN turns such a chat into terms both sides approve, tests the delivery
+against them and, once Maya releases the money, captures it through PayPal and pays each share to the cent.
+
+* **Clients** see what passed for each requirement, and why, before any money is captured.
+* **Independent builders and small teams** work to fixed, testable terms and get an exact split of what PayPal
+  actually received (after its fee), with each payee's payout status as PayPal reports it.
+
+## Why AI, and its limits
+
+* **Chat to checkable terms.** A model drafts amount, criteria, payees and shares (and may draft tests) from the
+  chat. Any requirement, e-mail or amount not found word for word in the chat is dropped and reported. (The demo
+  presets use prepared reference terms; paste your own agreement to have the model draft it.)
+* **Work against requirements.** For requirements that tests cannot check, a model judges the delivery and must
+  cite the lines it relied on. Code checks every citation; a verdict without a verified citation does not count.
+* **Limits.** The AI only recommends an amount; it cannot release, capture or move money. On test-judged
+  requirements it can only send work to a person, never pass it. It can misjudge
+  ([measured below](#measured-not-claimed)), so a person decides. Without an AI provider, the tests still run.
+
+## How PayPal is integrated (`app/paypal_client.py`)
+
+| Step | PayPal REST API |
+|---|---|
+| Hold | Orders v2: create with `intent: AUTHORIZE`; buyer approves in PayPal Checkout; `POST …/orders/{id}/authorize`; `GET` the order to check amount, currency and pact |
+| Release | Payments v2: `POST /v2/payments/authorizations/{id}/capture`, once per release (`…/void` cancels the hold) |
+| Split | Payouts v1: one `POST /v1/payments/payouts` batch; batch and items read back with `GET` |
+| Webhooks | `POST /v1/notifications/verify-webhook-signature` on each delivery, then the resource is re-read from PayPal (live delivery to a public URL was not tested) |
+
+PayPal processes and reports each payment operation; it does not read or enforce the agreement. YAVQEN builds the
+order, capture and payout batch from the locked terms. It is a Sandbox demo, not an escrow service or a licensed
+money transmitter ([known limits](docs/ARCHITECTURE.md#8-known-limits-stated-not-hidden)).
+
+## How it differs from an ordinary freelance payment
+
+* **Agreement locked by fingerprint.** Both parties approve one SHA-256 of the canonical terms; any edit cancels
+  both approvals. Once both approve, edits are refused (409 `terms_locked`), and the terms are re-checked against
+  the fingerprint before any capture. (Tamper evidence, not a legal signature.)
+* **Evidence tests in an isolated sandbox.** Agreed tests run under `bwrap` with no network (without `bwrap`, in a
+  restricted subprocess; the report says which).
+* **Cited AI verdicts, prompt-injection scanner.** A verdict counts only if its quote is found at the cited lines.
+  Text that tries to instruct the reviewer makes AI verdicts advisory, so AI-judged requirements wait for a person.
+* **Human-only release.** The authenticated client releases; a smaller amount is a proposal the freelancer accepts
+  or disputes, and an arbiter decides disputes. A second release is refused (409 `already_released`).
+* **PayPal's real payout status.** Reconcile reads each payout item back from PayPal; UNCLAIMED is shown as not paid out.
+
+## Run and verify it
+
+Python 3.12 on Linux. No PayPal account or API key: without credentials a labelled offline simulator stands in.
+
+```bash
+git clone https://github.com/ApexAis/pactpay.git && cd pactpay
+python3.12 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+PACTPAY_DB_PATH=:memory: python -m pytest -q                    # 138 passed
+PACTPAY_DB_PATH=:memory: python scripts/offline_walkthrough.py  # whole journey: PAID_OUT, 2nd release -> 409
+uvicorn app.main:app --port 8000                                # UI at http://127.0.0.1:8000
+```
+
+Browser end-to-end scripts, AI provider and live Sandbox setup: [Quick start](#quick-start-offline-no-credentials).
+
+**Live Sandbox evidence** (`evidence/live-sandbox/video-20261109T0840Z.json`, [more below](#verified-against-the-live-paypal-sandbox-2026-11-09)):
+$500.00 authorized, then captured once (capture `3V818276N9145912L` COMPLETED; PayPal fee $24.80, net $475.20).
+Payouts batch `QA35RLSW9N842`: 70 % share $332.64 **SUCCESS**; 30 % share $142.56 **UNCLAIMED**, not received.
 
 ## The journey
 
