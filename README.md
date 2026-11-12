@@ -161,6 +161,7 @@ evaluator falls back to a restricted subprocess and reports which isolation it u
 (`tests/fixtures/ai_eval/`). The deliverables are positive, paraphrased, keyword-stuffed, contradicting,
 prompt-injected, vague, unsafe and placeholder. They were run through a keyword rule baseline, the raw model, and
 the YAVQEN pipeline, plus the 15-case adversarial code corpus and the demo deliverables. All models ran locally.
+The measurements were taken with the reviewer prompt as it was before the rename; it differed from today's prompt only in the product name.
 
 <!-- EVAL_TABLE -->
 | System | Paid for an unmet requirement (false release) | Correct automatic verdicts | Held for a person | Held: injection detected |
@@ -239,10 +240,10 @@ Environment variables use the `PACTPAY_` prefix, and some internal identifiers k
 - PayPal request ids (`pactpay-…`);
 - `sender_batch_id`s (`PACTPAY-…`);
 - the evaluator version (`pactpay-eval/2.0.0`);
-- the live-setup config path (`~/.config/pactpay/`);
-- the Checkout brand name sent to PayPal.
+- the live-setup config path (`~/.config/pactpay/`).
 
-The same applies to the recorded evidence in `evidence/` and `docs/VERIFICATION_2026-11-09.md`. They are deliberately unchanged, so existing configurations keep working and the recorded PayPal evidence stays byte-identical.
+The same applies to the recorded evidence in `evidence/` and `docs/VERIFICATION_2026-11-09.md`, including the PayPal orders and payouts of the 9 Nov run.
+Texts the app sends to PayPal today, such as the Checkout brand name, order description and payout notes, say YAVQEN. They are deliberately unchanged, so existing configurations keep working and the recorded PayPal evidence stays byte-identical.
 
 ## License
 

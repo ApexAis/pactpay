@@ -171,12 +171,12 @@ class PayPalClient:
                 "reference_id": pact_id,
                 "custom_id": pact_id,
                 "invoice_id": request_id,
-                "description": f"PactPay milestone: {title}"[:127],
+                "description": f"YAVQEN milestone: {title}"[:127],
                 "amount": {**money(amount_cents, currency),
                            "breakdown": {"item_total": money(amount_cents, currency)}},
                 "items": items,
             }],
-            "application_context": {"brand_name": "PactPay", "shipping_preference": "NO_SHIPPING",
+            "application_context": {"brand_name": "YAVQEN", "shipping_preference": "NO_SHIPPING",
                                     "user_action": "CONTINUE", "return_url": return_url, "cancel_url": cancel_url},
         }
         return self.call("CREATE_ORDER", "POST", "/v2/checkout/orders", pact_id=pact_id, body=payload,
@@ -213,7 +213,7 @@ class PayPalClient:
                       subject: str) -> dict[str, Any]:
         payload = {"sender_batch_header": {"sender_batch_id": sender_batch_id, "recipient_type": "EMAIL",
                                            "email_subject": subject[:255],
-                                           "email_message": "Your share of a PactPay milestone the client released."},
+                                           "email_message": "Your share of a YAVQEN milestone the client released."},
                    "items": items}
         return self.call("CREATE_PAYOUT", "POST", "/v1/payments/payouts", pact_id=pact_id, body=payload,
                          request_id=sender_batch_id)

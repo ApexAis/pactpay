@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class Settings(BaseModel):
     """Application settings loaded exclusively from environment variables."""
 
-    app_name: str = Field(default="PactPay")
+    app_name: str = Field(default="YAVQEN")
     app_version: str = Field(default="1.0.0")
 
     # PayPal Sandbox Configuration (never uses live endpoints)

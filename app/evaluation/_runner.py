@@ -48,7 +48,7 @@ class _Channel:
         write_msg(self.proto_out, msg)
         resp = read_msg(self.proto_in)
         if not isinstance(resp, dict) or resp.get("t") != "resp" or resp.get("id") != self.next_id:
-            raise RuntimeError("PactPay runner: protocol error on RPC %d" % self.next_id)
+            raise RuntimeError("YAVQEN runner: protocol error on RPC %d" % self.next_id)
         if resp.get("ok") is True:
             return decode(resp.get("value"))
         err = resp.get("error") if isinstance(resp.get("error"), dict) else {}

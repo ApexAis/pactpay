@@ -47,7 +47,7 @@ def _install_guard(read_roots):
         import _posixsubprocess
 
         def _denied(*args, **kwargs):
-            raise PermissionError("PactPay sandbox: starting processes is not allowed")
+            raise PermissionError("YAVQEN sandbox: starting processes is not allowed")
 
         _posixsubprocess.fork_exec = _denied
     except ImportError:
@@ -66,23 +66,23 @@ def _install_guard(read_roots):
         if event == "open":
             path, mode, flags = (tuple(args) + (None, None, None))[:3]
             if isinstance(mode, str) and any(ch in mode for ch in "wax+"):
-                raise PermissionError("PactPay sandbox: writing files is not allowed")
+                raise PermissionError("YAVQEN sandbox: writing files is not allowed")
             if isinstance(flags, int) and flags & write_flags:
-                raise PermissionError("PactPay sandbox: writing files is not allowed")
+                raise PermissionError("YAVQEN sandbox: writing files is not allowed")
             if isinstance(path, int):
                 return
             if not allowed_path(path):
-                raise PermissionError("PactPay sandbox: reading %r is not allowed" % (path,))
+                raise PermissionError("YAVQEN sandbox: reading %r is not allowed" % (path,))
         elif event in ("os.listdir", "os.scandir"):
             path = args[0] if args else "."
             if path is None or isinstance(path, int) or not allowed_path(path):
-                raise PermissionError("PactPay sandbox: listing directories is not allowed")
+                raise PermissionError("YAVQEN sandbox: listing directories is not allowed")
         elif event == "import":
             name = str(args[0] if args else "")
             if name.split(".")[0] in _BLOCKED_IMPORTS:
-                raise ImportError("PactPay sandbox: importing %s is not allowed" % name)
+                raise ImportError("YAVQEN sandbox: importing %s is not allowed" % name)
         elif event in _DENIED_EVENTS:
-            raise PermissionError("PactPay sandbox: %s is not allowed" % event)
+            raise PermissionError("YAVQEN sandbox: %s is not allowed" % event)
 
     sys.addaudithook(hook)
 

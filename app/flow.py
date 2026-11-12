@@ -577,7 +577,7 @@ class Service:
                 cap = self.paypal.capture_authorization(
                     pact["authorization_id"], pact_id=pact_id, request_id=rel["capture_request_id"],
                     amount_cents=rel["amount_cents"], currency=currency,
-                    note=f"PactPay release of {usd(rel['amount_cents'])} decided by the {rel['decided_role']}")
+                    note=f"YAVQEN release of {usd(rel['amount_cents'])} decided by the {rel['decided_role']}")
             except PayPalError as exc:
                 # PayPal may have captured before its answer was lost; past PayPal's request-id window a retry is
                 # refused as a duplicate invoice id (each release's capture invoice_id is unique), never captured twice
@@ -673,11 +673,11 @@ class Service:
         body_items = [{"recipient_type": "EMAIL", "receiver": it["receiver"], "sender_item_id": it["sender_item_id"],
                        "amount": {"value": f"{it['amount_cents'] // 100}.{it['amount_cents'] % 100:02d}",
                                   "currency": full["currency"]},
-                       "note": f"PactPay: your share of {full['title']}"[:4000]}
+                       "note": f"YAVQEN: your share of {full['title']}"[:4000]}
                       for it in items if it["amount_cents"] > 0]
         try:
             resp = self.paypal.create_payout(pact_id=pact_id, sender_batch_id=payout["sender_batch_id"],
-                                             items=body_items, subject=f"PactPay payout: {full['title']}")
+                                             items=body_items, subject=f"YAVQEN payout: {full['title']}")
         except PayPalError as exc:
             if exc.status_code == 400 and "already exists" in f"{exc.issue} {exc.message}":
                 # PayPal holds a batch with this sender_batch_id (an earlier answer was lost): no second payout
@@ -885,9 +885,9 @@ class Service:
             elif etype.startswith("CHECKOUT.ORDER."):
                 row = db.execute("SELECT id AS pact_id FROM pacts WHERE order_id = ?", (resource.get("id"),)).fetchone()
             else:
-                return {"applied": False, "reason": "event type not used by PactPay"}
+                return {"applied": False, "reason": "event type not used by YAVQEN"}
         if not row:
-            return {"applied": False, "reason": "the resource is not one of PactPay's"}
+            return {"applied": False, "reason": "the resource is not one of YAVQEN's"}
         try:
             self._reconcile(row["pact_id"])
         except (ApiError, PayPalError) as exc:

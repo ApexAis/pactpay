@@ -72,8 +72,8 @@ The banner turns green (**PayPal Sandbox · live**). Start a preset, then:
 1. Before both parties approve, edit the payee e-mails to Sandbox Personal accounts (or the test receiver).
 2. Approve the terms as both parties.
 3. **Create PayPal order → Approve in PayPal Sandbox**, signing in as the Personal buyer.
-4. PayPal returns you to YAVQEN. Click **Authorize & verify hold**. (PayPal's Checkout page shows the former name,
-   PactPay: that is the brand name the app sends to PayPal, which is intentionally unchanged.)
+4. PayPal returns you to YAVQEN. Click **Authorize & verify hold**. (PayPal's Checkout page shows the brand name the
+   app sends, YAVQEN. Orders recorded in `evidence/` were created under the earlier working name.)
 5. Continue with Deliver, Verify and Decide. **Reconcile** reads every payout item back from PayPal.
 
 **Webhooks (optional).** PayPal can only deliver webhooks to a public HTTPS URL.
