@@ -4,7 +4,7 @@
 work is tested against it, a person releases the money, and PayPal's own records report each payee's status.
 Built for the PayPal AI Hackathon 2026.
 
-**Run and test it:** [commands](#run-and-verify-it) (138 tests, offline) ·
+**Video:** [2:51 demo on YouTube](https://www.youtube.com/watch?v=sY-H5oYsZqw) · **Run and test it:** [commands](#run-and-verify-it) (138 tests, offline) ·
 **Live Sandbox evidence:** [evidence/live-sandbox/](evidence/live-sandbox/) · **License:** [MIT](LICENSE)
 
 ## What it solves, and for whom
