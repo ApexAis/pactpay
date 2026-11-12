@@ -119,7 +119,7 @@ python · fastapi · sqlite · paypal-orders-v2 · paypal-payments-v2 · paypal-
 gpt-oss · bubblewrap · playwright · javascript
 
 ## Try it
-* Repository: https://github.com/ApexAis/pactpay (the repository keeps the project's former name, PactPay)
+* Repository: https://github.com/ApexAis/yavqen
 * Run locally: `pip install -r requirements.txt && uvicorn app.main:app` (offline simulator) or with Sandbox
   credentials ([docs/SANDBOX_SETUP.md](docs/SANDBOX_SETUP.md)).
 * Video: linked from the Devpost entry.

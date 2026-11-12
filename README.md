@@ -4,12 +4,8 @@
 work is tested against it, a person releases the money, and PayPal's own records report each payee's status.
 Built for the PayPal AI Hackathon 2026.
 
-**Video:** [2:51 demo (1080p)](https://drive.google.com/file/d/1sQj6m0bmVTZ_A2jSvdY_0gxMvPt9_uCc/view) · **Run and test it:** [commands](#run-and-verify-it) (138 tests, offline) ·
+**Run and test it:** [commands](#run-and-verify-it) (138 tests, offline) ·
 **Live Sandbox evidence:** [evidence/live-sandbox/](evidence/live-sandbox/) · **License:** [MIT](LICENSE)
-
-> **Formerly PactPay** (renamed 11 Nov 2026). The repository URL, `PACTPAY_*` variables, internal identifiers,
-> PayPal request ids and `sender_batch_id`s (`pactpay-…`, `PACTPAY-…`), texts sent to PayPal (such as the Checkout
-> brand name), the recorded evidence in `evidence/` and the 9 Nov demo recording keep the former name on purpose.
 
 ## What it solves, and for whom
 
@@ -64,11 +60,11 @@ money transmitter ([known limits](docs/ARCHITECTURE.md#8-known-limits-stated-not
 Python 3.12 on Linux. No PayPal account or API key: without credentials a labelled offline simulator stands in.
 
 ```bash
-git clone https://github.com/ApexAis/pactpay.git && cd pactpay
+git clone https://github.com/ApexAis/yavqen.git && cd yavqen
 python3.12 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
-PACTPAY_DB_PATH=:memory: python -m pytest -q                    # 138 passed
-PACTPAY_DB_PATH=:memory: python scripts/offline_walkthrough.py  # whole journey: PAID_OUT, 2nd release -> 409
-uvicorn app.main:app --port 8000                                # UI at http://127.0.0.1:8000
+python -m pytest -q                       # 138 passed (tests use their own temporary database)
+python scripts/offline_walkthrough.py     # whole journey in memory: PAID_OUT, 2nd release -> 409
+uvicorn app.main:app --port 8000          # UI at http://127.0.0.1:8000
 ```
 
 Browser end-to-end scripts, AI provider and live Sandbox setup: [Quick start](#quick-start-offline-no-credentials).
@@ -97,8 +93,8 @@ citations, the human decision and the PayPal records.
 ```bash
 python3.12 -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
-PACTPAY_DB_PATH=:memory: python -m pytest -q          # 138 tests
-PACTPAY_DB_PATH=:memory: python scripts/offline_walkthrough.py
+python -m pytest -q                                   # 138 tests
+python scripts/offline_walkthrough.py
 uvicorn app.main:app --port 8000                      # open http://127.0.0.1:8000
 ```
 
@@ -106,8 +102,8 @@ uvicorn app.main:app --port 8000                      # open http://127.0.0.1:80
 
 ```bash
 pip install -r requirements-dev.txt && playwright install chromium
-python scripts/ui_e2e.py http://127.0.0.1:8000 /tmp/pactpay-ui            # main journey, one screenshot per step
-python scripts/ui_dispute_e2e.py http://127.0.0.1:8000 /tmp/pactpay-dispute  # partial release, dispute, arbiter
+python scripts/ui_e2e.py http://127.0.0.1:8000 /tmp/yavqen-ui             # main journey, one screenshot per step
+python scripts/ui_dispute_e2e.py http://127.0.0.1:8000 /tmp/yavqen-dispute  # partial release, dispute, arbiter
 ```
 
 Without PayPal credentials, YAVQEN uses an offline PayPal protocol simulator and says so on every screen (yellow
@@ -236,6 +232,17 @@ scripts/               walkthroughs, live Sandbox checks, AI evaluation, UI end-
 docs/                  architecture and limits, Sandbox setup, competitive differentiation
 evidence/              live Sandbox results and AI evaluation results (ids and numbers; no credentials)
 ```
+
+### Identifiers that keep the earlier working name
+
+Environment variables use the `PACTPAY_` prefix, and some internal identifiers keep the project's earlier working name:
+- PayPal request ids (`pactpay-…`);
+- `sender_batch_id`s (`PACTPAY-…`);
+- the evaluator version (`pactpay-eval/2.0.0`);
+- the live-setup config path (`~/.config/pactpay/`);
+- the Checkout brand name sent to PayPal.
+
+The same applies to the recorded evidence in `evidence/` and `docs/VERIFICATION_2026-11-09.md`. They are deliberately unchanged, so existing configurations keep working and the recorded PayPal evidence stays byte-identical.
 
 ## License
 
